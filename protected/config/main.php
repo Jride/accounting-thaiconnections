@@ -61,9 +61,9 @@ return array(
 			'allowAutoLogin'=>true,
 		),
 		'db'=>array(
-			'connectionString'=>'mysql:host=localhost;port=3306;dbname=thaiull7_lazy8web',
-			'username'=>'thaiull7_admin',
-			'password'=>'}A*T_cpkx#-f',
+			'connectionString'=>'mysql:host=localhost;port=3306;dbname=accounting',
+			'username'=>'accounting',
+			'password'=>'accounting',
 		),
 	),
 
