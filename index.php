@@ -24,9 +24,9 @@ define("DB_NAME", "accounting");*/
 
 // Production
 define("DB_HOST", "localhost");
-define("DB_USER", "thaiull7_admin");
-define("DB_NAME", "thaiull7_lazy8web");
-define("DB_PASS", "}A*T_cpkx#-f");
+define("DB_USER", "accounting");
+define("DB_NAME", "accounting");
+define("DB_PASS", "accounting");
 
 // change the following paths if necessary
 $yii=dirname(__FILE__).'/yii/framework/yii.php';
