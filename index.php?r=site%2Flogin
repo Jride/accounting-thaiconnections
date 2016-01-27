@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="language" content="en" />
+<link rel="stylesheet" type="text/css" href="/css/form.css" />
+<link rel="stylesheet" type="text/css" href="/css/main.css" />
+<link rel="stylesheet" type="text/css" href="/assets/6b702508/menu_blue.css" />
+<script type="text/javascript" src="/assets/58d2e7fa/jquery.js"></script>
+<script type="text/javascript" src="/assets/6b702508/menu.js"></script>
+<title>Lazy8Web - Login</title>
+</head>
+
+
+<body>
+<div id="page">
+
+
+<div id="header">
+
+<table><tr><td>
+	<div id="logo"><a href="http://accounting.thaiconnections.org/index.php">
+	</a></div>
+</td><td style="text-align:center">
+</td><td style="text-align:right">
+</td></tr></table>
+<ul id='menu' class='menu'>
+<li  class=topline><a class="menulink" href="/index.php?r=site/login">Login</a></li>
+</ul>
+<script type='text/javascript'>
+var menu=new menu.dd('menu',3);
+menu.init('menu','menuhover');
+</script>
+
+<!-- Reconciled Balance of all 101 accounts -->
+
+</div><!-- header -->
+
+<div id="content">
+
+<h1>Login</h1>
+
+<div class="yiiForm">
+<form action="/index.php?r=site/login" method="post">
+
+<div class="simple">
+<label class="help" title="The name for the user that will be used to login to the application" onclick="alert(this.title)" for="LoginForm_username">User name</label><input name="LoginForm[username]" id="LoginForm_username" type="text" /></div>
+
+<div class="simple">
+<label class="help" title="Try to make a password that is difficult to guess" onclick="alert(this.title)" for="LoginForm_password">Password</label><input name="LoginForm[password]" id="LoginForm_password" type="password" />
+</div>
+
+<div class="action">
+<input id="ytLoginForm_rememberMe" type="hidden" value="0" name="LoginForm[rememberMe]" /><input class="help" title="This will put a cookie onto your browser to tell Lazy8Web to log you in automatically if you were recently here" name="LoginForm[rememberMe]" id="LoginForm_rememberMe" value="1" type="checkbox" /><label for="LoginForm_rememberMe">Remember me next time</label><br/>
+<input title="Enter the username that you were given by the system administrator" type="submit" name="yt0" value="Login" /></div>
+
+</form>
+</div><!-- yiiForm -->
+</div><!-- content -->
+
+<div id="footer">
+  
+</div><!-- footer -->
+
+</div><!-- page -->
+</body>
+
+</html>
