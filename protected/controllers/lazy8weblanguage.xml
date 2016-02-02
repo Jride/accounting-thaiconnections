@@ -3784,7 +3784,7 @@ For more information go to <notrans text="&lt;a href=&quot;http://www.lazy8.nu&q
       <translation>Allow the user to change the value. This must be true unless there is another automatic or default value put here.</translation>
     </message>
     <message category="lazy8" key="contexthelp.allowCustomer">
-      <translation>Allow the user to select a customer or project to be associated with this row</translation>
+      <translation>Allow the user to select a tag to be associated with this row</translation>
     </message>
     <message category="lazy8" key="contexthelp.allowFilingTextField">
       <translation>Show the filing field</translation>
@@ -3895,7 +3895,7 @@ For more information go to <notrans text="&lt;a href=&quot;http://www.lazy8.nu&q
       <translation>Allow Repeat This Row</translation>
     </message>
     <message category="lazy8" key="Allow Customer">
-      <translation>Allow Customer</translation>
+      <translation>Allow Tag</translation>
     </message>
     <message category="lazy8" key="Allow Notes">
       <translation>Allow Notes</translation>
@@ -3963,7 +3963,7 @@ For more information go to <notrans text="&lt;a href=&quot;http://www.lazy8.nu&q
 <message category="lazy8" key="Could not create the Account, bad paramters"><translation>Could not create the Account, bad parameters</translation></message>
 <message category="lazy8" key="Could not create the AccountType, bad paramters"><translation>Could not create the AccountType, bad parameters</translation></message>
 <message category="lazy8" key="Could not create the company, bad paramters"><translation>Could not create the company, bad parameters</translation></message>
-<message category="lazy8" key="Could not create the Customer, bad paramters"><translation>Could not create the Customer, bad parameters</translation></message>
+<message category="lazy8" key="Could not create the Customer, bad paramters"><translation>Could not create the Tag, bad parameters</translation></message>
 <message category="lazy8" key="Could not create the period, bad paramters"><translation>Could not create the period, bad parameters</translation></message>
 <message category="lazy8" key="Could not create the TransactionAmount, bad paramters"><translation>Could not create the TransactionAmount, bad parameters</translation></message>
 <message category="lazy8" key="Could not create the Transaction, bad paramters"><translation>Could not create the Transaction, bad parameters</translation></message>
@@ -4943,7 +4943,7 @@ Use the "balance" button to write the last rows amount.</translation>
       <translation>Managing Company</translation>
     </message>
     <message category="lazy8" key="Managing Customer">
-      <translation>Managing Customer/project</translation>
+      <translation>Managing Tags</translation>
     </message>
     <message category="lazy8" key="Managing Period">
       <translation>Managing Period</translation>
@@ -4979,7 +4979,7 @@ Use the "balance" button to write the last rows amount.</translation>
       <translation>New Company</translation>
     </message>
     <message category="lazy8" key="New Customer">
-      <translation>New Project</translation>
+      <translation>New Tag</translation>
     </message>
     <message category="lazy8" key="New Period">
       <translation>New Period</translation>
@@ -5030,7 +5030,7 @@ Use the "balance" button to write the last rows amount.</translation>
       <translation>Allow the user to edit company options</translation>
     </message>
     <message category="lazy8" key="option.name.allowCustomer">
-      <translation>Allow the user to enter new customer/projects</translation>
+      <translation>Allow the user to enter new Tag</translation>
     </message>
     <message category="lazy8" key="option.name.allowExportAll">
       <translation>Allow the user to export all companies</translation>
@@ -5255,7 +5255,7 @@ Use the "balance" button to write the last rows amount.</translation>
       <translation>Update Company</translation>
     </message>
     <message category="lazy8" key="Update Customer">
-      <translation>Update Customer/project</translation>
+      <translation>Update Tag</translation>
     </message>
     <message category="lazy8" key="Update Period">
       <translation>Update Period</translation>
@@ -8195,7 +8195,7 @@ Use the "balance" button to write the last rows amount.</translation>
       <translation>Client</translation>
     </message>
     <message category="lazy8" key="Customer/Project">
-      <translation>Client / Projet</translation>
+      <translation>Tag</translation>
     </message>
     <message category="lazy8" key="Customer/project accounts">
       <translation>Les comptes des clients de projet /</translation>

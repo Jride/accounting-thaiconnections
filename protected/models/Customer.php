@@ -28,7 +28,6 @@ class Customer extends CActiveRecord
 	 * @var integer $code
 	 * @var string $name
 	 * @var string $desc
-	 * @var integer $accountId
 	 * @var string $changedBy
 	 * @var string $dateChanged
 	 */
@@ -37,8 +36,7 @@ class Customer extends CActiveRecord
 	 	 return 'id=' . $this->id . ';'
 	 	 	.'code='.$this->code .  ';' 
 	 	 	.'name='.$this->name .  ';' 
-	 	 	.'desc='.$this->desc .  ';' 
-	 	 	.'account='.$this->account->code .  ';' . $this->account->name .  ';' . $this->accountId ; 	
+	 	 	.'desc='.$this->desc;
 	 }
 	/**
 	 * Returns the static model of the specified AR class.
@@ -65,8 +63,8 @@ class Customer extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('companyId, code, name, accountId', 'required'),
-			array('companyId, code, accountId', 'numerical', 'integerOnly'=>true),
+			array('companyId, code, name', 'required'),
+			array('companyId, code', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>100),
 			array('desc', 'length', 'max'=>255),
 			array('dateChanged', 'safe'),
@@ -84,7 +82,8 @@ class Customer extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'account'=>array(self::BELONGS_TO, 'Account', 'accountId'), 
+			// 'account'=>array(self::MANY_MANY, 'Account', 'code'), 
+			'account' => array(self::MANY_MANY, 'Account', 'AccountCustomerAssignment(customer_id, account_id)'),
 		);
 	}
 
@@ -99,7 +98,6 @@ class Customer extends CActiveRecord
 			'code' => Yii::t('lazy8','Code'),
 			'name' => Yii::t('lazy8','Name'),
 			'desc' => Yii::t('lazy8','Desc'),
-			'accountId' => Yii::t('lazy8','Account'),
 			'userId' => Yii::t('lazy8','User'),
 			'dateChanged' => Yii::t('lazy8','Date Changed'),
 			'changedBy' => Yii::t('lazy8','Changed by'),

@@ -18,14 +18,17 @@
 *
 */
 ?>
-<h2><?php echo Yii::t('lazy8','Update Customer') . ' - ' .$model->name; ?></h2>
+<h2><?php echo Yii::t('lazy8','Update Tag') . ' - ' .$model->name; ?></h2>
 
 <div class="actionBar">
-[<?php echo CHtml::link(Yii::t('lazy8','New Customer'),array('create')); ?>]
-[<?php echo CHtml::link(Yii::t('lazy8','Manage Customer'),array('admin')); ?>]
+[<?php echo CHtml::link(Yii::t('lazy8','New Tag'),array('create')); ?>]
+[<?php echo CHtml::link(Yii::t('lazy8','Manage Tags'),array('admin')); ?>]
 </div>
 
 <?php echo $this->renderPartial('_form', array(
 	'model'=>$model,
+	'taggedAccounts'=>$taggedAccounts,
+	'numTaggedAccounts'=>$numTaggedAccounts,
+	'accountList'=>$accountList,
 	'update'=>true,
 )); ?>

@@ -100,7 +100,36 @@ class CustomerController extends CController
 				$this->redirect(array('admin','id'=>$model->id));
 			}
 		}
-		$this->render('update',array('model'=>$model));
+
+		// Get the Accounts associated with this Customer
+		$customerId = $model->id;
+		$count = AccountCustomerAssignment::model()->count(array(
+													    'condition'=>'customerId=:customerId',
+													    'params'=>array(':customerId'=>intval($customerId))
+													));
+		$taggedAccounts = array();
+		
+		if($count > 0){
+			$taggedAccounts = AccountCustomerAssignment::model()->findAll(array(
+													    'condition'=>'customerId=:customerId',
+													    'params'=>array(':customerId'=>intval($customerId))
+													));
+		}
+
+		$accountList = Account::model()->findAll();
+
+		$this->render('update', array('model'=>$model, 'taggedAccounts' => $taggedAccounts, 'numTaggedAccounts' => $count, 'accountList' => $accountList));
+		
+
+		// echo '<pre>';
+		// foreach ($taggedAccounts as $t_acc) {
+		// 	echo "Tagged Account: " . $t_acc->accountId;
+		// 	echo "Tagged Account name: " . $t_acc->account->name;
+		// }
+		// echo '</pre>';
+		// $taggedAccounts = array();
+
+		
 	}
 
 	/**

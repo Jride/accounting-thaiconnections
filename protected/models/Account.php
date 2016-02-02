@@ -34,6 +34,7 @@ class Account extends CActiveRecord
 	 * @var string $report_id
 	 * @var string $changedBy
 	 * @var string $dateChanged
+	 * @var string $tagCode
 	 */
 
 	 public function toString(){
@@ -91,6 +92,7 @@ class Account extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'accountType'=>array(self::BELONGS_TO, 'AccountType', 'accountTypeId'),
+			'customer' => array(self::MANY_MANY, 'Customer', 'AccountCustomerRelation(account_id, customer_id)'),
 		);
 	}
 

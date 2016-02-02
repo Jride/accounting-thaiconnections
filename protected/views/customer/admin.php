@@ -18,10 +18,10 @@
 *
 */
 ?>
-<h2><?php echo Yii::t('lazy8','Managing Customer'); ?></h2>
+<h2><?php echo Yii::t('lazy8','Managing Tags'); ?></h2>
 
 <div class="actionBar">
-[<?php echo CHtml::link(Yii::t('lazy8','New Customer'),array('create')); ?>]
+[<?php echo CHtml::link(Yii::t('lazy8','New Tag'),array('create')); ?>]
 </div>
 
 <table class="dataGrid">
@@ -30,7 +30,6 @@
     <th><?php echo $sort->link('code'); ?></th>
     <th><?php echo $sort->link('name'); ?></th>
     <th><?php echo $sort->link('desc'); ?></th>
-    <th><?php echo $sort->link('accountId'); ?></th>
     <th><?php echo $sort->link('changedBy'); ?></th>
     <th><?php echo $sort->link('dateChanged'); ?></th>
     <th><?php echo CHtml::encode(Yii::t('lazy8','Actions')); ?></th>
@@ -44,9 +43,6 @@
     <td><?php echo CHtml::encode($model->code); ?></td>
     <td><?php echo CHtml::encode($model->name); ?></td>
     <td><?php echo CHtml::encode($model->desc); ?></td>
-    <td><?php  
-    echo $model->accountId != 0 && isset($model->account) ? CHtml::encode($model->account->code . ' ' . $model->account->name):""; 
-    ?></td>
     <td><?php echo CHtml::encode($model->changedBy); ?></td>
     <td><?php echo CHtml::encode(User::getDateFormatted($model->dateChanged,$cLoc,$dateformatter)); ?></td>
     <td>

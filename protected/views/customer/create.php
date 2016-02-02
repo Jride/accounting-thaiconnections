@@ -18,10 +18,10 @@
 *
 */
 ?>
-<h2><?php echo Yii::t('lazy8','New Customer'); ?></h2>
+<h2><?php echo Yii::t('lazy8','New Tag'); ?></h2>
 
 <div class="actionBar">
-[<?php echo CHtml::link(Yii::t('lazy8','Manage Customer'),array('admin')); ?>]
+[<?php echo CHtml::link(Yii::t('lazy8','Manage Tags'),array('admin')); ?>]
 </div>
 
 <?php echo $this->renderPartial('_form', array(

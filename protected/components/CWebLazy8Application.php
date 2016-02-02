@@ -130,7 +130,7 @@ class CWebLazy8Application extends CWebApplication
 				  "visible"=>Yii::app()->user->getState('allowAccount')),
 			       array(
 				  "url"=>array("route"=>"customer"),
-				  "label"=>Yii::t("lazy8","Projects"),
+				  "label"=>Yii::t("lazy8","Tags"),
 				  "visible"=>Yii::app()->user->getState('allowCustomer')),
 				  array(
 				  "url"=>array("route"=>"donor"),

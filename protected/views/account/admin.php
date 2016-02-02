@@ -47,8 +47,7 @@
     <td><?php echo CHtml::encode(User::getDateFormatted($model->dateChanged,$cLoc,$dateformatter)); ?></td>
     <td>
       <?php echo CHtml::link(Yii::t('lazy8','Update'),array('update','id'=>$model->id)); ?>
-      <?php if(Customer::model()->find('accountId='.$model->id)==null &&		
-      	      TransRow::model()->find('accountId='.$model->id)==null){
+      <?php if(TransRow::model()->find('accountId='.$model->id)==null){
       		$deletebutton=CHtml::linkButton(Yii::t('lazy8','Delete'),array(
 			  'submit'=>'',
 			  'params'=>array('command'=>'delete','id'=>$model->id),
