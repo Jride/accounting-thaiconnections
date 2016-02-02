@@ -27,5 +27,8 @@
 
 <?php echo $this->renderPartial('_form', array(
 	'model'=>$model,
+	'tags'=>$tags,
+	'count'=>$count,
+	'tagList'=>$tagList,
 	'update'=>true,
 )); ?>

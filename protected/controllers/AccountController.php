@@ -182,7 +182,25 @@ class AccountController extends CController
 				$this->redirect(array('admin','id'=>$model->id));
 			}
 		}
-		$this->render('update',array('model'=>$model));
+
+		// Get the Accounts associated with this Customer
+		$accountId = $model->id;
+		$count = AccountCustomerAssignment::model()->count(array(
+													    'condition'=>'accountId=:accountId',
+													    'params'=>array(':accountId'=>intval($accountId))
+													));
+		$tags = array();
+		
+		if($count > 0){
+			$tags = AccountCustomerAssignment::model()->findAll(array(
+													    'condition'=>'accountId=:accountId',
+													    'params'=>array(':accountId'=>intval($accountId))
+													));
+		}
+
+		$tagList = Account::model()->findAll();
+
+		$this->render('update', array('model'=>$model, 'tags' => $tags, 'count' => $count, 'tagList' => $tagList));
 	}
 
 
