@@ -479,11 +479,20 @@ Powered by <a href=\"http://yiiframework.com/\">Yii Framework</a>";
 	}
 	public static function getPhPDateFormatNoPercent($locale=null){
 		//convert the format to PHP date format
-		return str_replace(array('MM','M','dd','d','%%d','yyyy','yy'),array('m','m','d','d','d','Y','y',),User::getDateFormat($locale));
+		return str_replace(array('MMM','MM','M','dd','d','%%d','yyyy','yy'),array('MMM','m','m','d','d','d','Y','y',),User::getDateFormat($locale));
 	}
 	public static function getPhPDateFormat($locale=null){
 		//convert the format to PHP date format
-		return str_replace(array('MMM','MM','M','dd','d','%%d','yyyy','yy'),array('%b','%m','%m','%d','%d','%d','%Y','%y',),User::getDateFormat($locale));
+		return str_replace(array('MM','M','dd','d','%%d','yyyy','yy'),array('%m','%m','%d','%d','%d','%Y','%y',),User::getDateFormat($locale));
+	}
+	public static function getPhPDateFormatDatePicker($locale=null){
+		//convert the format to PHP date format
+		$dateFormat='d/MM/yyyy';
+		return str_replace(array('MMM','MM','M','dd','d','%%d','yyyy','yy'),array('%b','%m','%m','%d','%d','%d','%Y','%y',),$dateFormat);
+	}
+	public static function getDateFormattedDatePicker($dateToFormat){
+		$date = DateTime::createFromFormat('d M Y', $dateToFormat);
+		return date_format($date, 'd/m/Y');
 	}
 	public static function getDateFormatted($dateToFormat,$locale=null,$formatter=null){
 		if(strlen($dateToFormat)==0)return "";
