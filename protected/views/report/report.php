@@ -59,7 +59,7 @@ if(isset($repParams) && count($repParams)>0){
 				else
 					$displayNum=$numberFormatter->format($numberFormat,$displayNum);
 			}
-			if($repParam->isDate)$displayNum=$dateFormatter->formatDateTime($displayNum,'short',null);
+			if($repParam->isDate)$displayNum=$dateFormatter->formatDateTime($displayNum,'medium',null);
 			echo CHtml::encode($displayNum);
 			?></td></tr>
 			<?php
@@ -203,7 +203,7 @@ foreach($reader as $n=>$row){
 							else
 								$display=$numberFormatter->format($numberFormat,$display);
 						}
-						if($repGroupField->isDate)$display=$dateFormatter->formatDateTime($display,'short',null);
+						if($repGroupField->isDate)$display=$dateFormatter->formatDateTime($display,'medium',null);
 							
 						echo $display;
 						?></td>
@@ -246,7 +246,7 @@ foreach($reader as $n=>$row){
 					else
 						$display=$numberFormatter->format($numberFormat,$display);
 				}
-				if($repRow->isDate)$display=$dateFormatter->formatDateTime($display,'short',null);
+				if($repRow->isDate)$display=$dateFormatter->formatDateTime($display,'medium',null);
 				echo $display;
 			}else{
 				$displayNum=$row[$repRow->fieldName];
@@ -256,7 +256,7 @@ foreach($reader as $n=>$row){
 					else
 						$displayNum=$numberFormatter->format($numberFormat,$displayNum);
 				}
-				if($repRow->isDate)$displayNum=$dateFormatter->formatDateTime($displayNum,'short',null);
+				if($repRow->isDate)$displayNum=$dateFormatter->formatDateTime($displayNum,'medium',null);
 				echo $displayNum;
 			}
 			?></td>

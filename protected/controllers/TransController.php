@@ -67,7 +67,7 @@ class TransController extends CController
 	private function renderLocale($screen,$loadTransValue=null){
 		$models=$this->loadTrans($loadTransValue);
 		//show the report
-		$cLoc=CLocale::getInstance(Yii::app()->user->getState('languagecode'));
+		$cLoc=CLocale::getInstance('en');
 		$numberFormatter=$cLoc->getNumberFormatter();
 		$numberFormat=User::getNumberFormat();
 		$previous="";
@@ -169,7 +169,7 @@ class TransController extends CController
 	 */
 	private function loadTrans($restore=false)
 	{
-		$cLoc=CLocale::getInstance(Yii::app()->user->getState('languagecode'));
+		$cLoc=CLocale::getInstance('en');
 		$numberFormatter=$cLoc->getNumberFormatter();
 		$numberFormat=User::getNumberFormat();
 		$dateformatter=new CDateFormatter($cLoc);
@@ -314,7 +314,7 @@ class TransController extends CController
 			$command=Report::model()->dbConnection->createCommand("SELECT TransRow.* FROM TransRow JOIN Account on TransRow.accountId=Account.id WHERE TransRow.transId=".$_GET['id']." ORDER BY Account.code");
 			$transRows=$command->query();
 			$rownum=0;
-			$cLoc=CLocale::getInstance(Yii::app()->user->getState('languagecode'));
+			$cLoc=CLocale::getInstance('en');
 			$numberFormatter=$cLoc->getNumberFormatter();
 			$numberFormat=User::getNumberFormat();
 			$dateformatter=new CDateFormatter($cLoc);
@@ -421,7 +421,7 @@ class TransController extends CController
 		}
 		$creditsum=0;
 		$debitsum=0;
-		$cLoc=CLocale::getInstance(Yii::app()->user->getState('languagecode'));
+		$cLoc=CLocale::getInstance('en');
 		foreach($models as $model)
 		{
 			$amountdebit=$this->parseNumber($model->amountdebit,$cLoc);
@@ -445,7 +445,7 @@ class TransController extends CController
 			//everything is ok.  Make the new transaction
 		$models=$this->getFromTempTrans();
 		$trans=new Trans();
-		$cLoc=CLocale::getInstance(Yii::app()->user->getState('languagecode'));
+		$cLoc=CLocale::getInstance('en');
 		$trans->invDate=User::parseDate($models[0]->invDate,$cLoc);
 		if($isUpdateRegDate)
 			$trans->regDate=date('Y-m-d');
@@ -480,7 +480,7 @@ class TransController extends CController
 	{
 		$trans=TempTrans::model()->findAll(array('condition'=>'userId='.Yii::app()->user->id,'order'=>'rownum'));
 		if($trans!==null){
-			$cLoc=CLocale::getInstance(Yii::app()->user->getState('languagecode'));
+			$cLoc=CLocale::getInstance('en');
 			$numberFormatter=$cLoc->getNumberFormatter();
 			$dateformatter=$cLoc->getDateFormatter();
 			$numberFormat=User::getNumberFormat();
@@ -570,7 +570,7 @@ class TransController extends CController
 		$model->amountcredit="";
 		$model->userId=Yii::app()->user->id;
 		$model->save();
-		$cLoc=CLocale::getInstance(Yii::app()->user->getState('languagecode'));
+		$cLoc=CLocale::getInstance('en');
 		$model->invDate=User::getDateFormatted($model->invDate,$cLoc);
 		$model->regDate=User::getDateFormatted($model->regDate,$cLoc);
 		$model->dateChanged=$model->regDate;

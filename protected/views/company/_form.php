@@ -49,7 +49,7 @@
 if(Yii::app()->user->getState('allowAdmin') ){
 $calendar=array(	
 			'firstDay'=>'1',
-			'language'=>Yii::app()->user->getState('languagecode'),
+			'language'=>'en',
 			'inputField'=>'fodelsedatum',
 			'ifFormat'=>User::getPhPDateFormat(),
                       ); 

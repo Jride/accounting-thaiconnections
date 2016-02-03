@@ -19,10 +19,10 @@
 */
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo Yii::app()->user->getState('languagecode'); ?>" lang="<?php echo Yii::app()->user->getState('languagecode'); ?>">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo 'en'; ?>" lang="<?php echo 'en'; ?>">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="language" content="<?php echo Yii::app()->user->getState('languagecode'); ?>" />
+<meta name="language" content="<?php echo 'en'; ?>" />
 <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/form.css" />
 <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/main.css" />
 <?php if(strlen(Yii::app()->user->getState('reportCssFile'))>0){  ?>
@@ -83,7 +83,7 @@ if(!Yii::app()->user->isGuest){
 	}else{
 		echo '<div id="titleperiod">'.$linkhtml . CHtml::encode(Yii::t("lazy8",'Now editing Company/period')); 
 		?><br /><?php 
-		$cLoc=CLocale::getInstance(Yii::app()->user->getState('languagecode')); 
+		$cLoc=CLocale::getInstance('en'); 
 		$dateformatter=new CDateFormatter($cLoc); 
 		echo CHtml::encode(Yii::app()->user->getState('selectedCompany') . ' / ' . 
 			User::getDateFormatted(Yii::app()->user->getState('selectedPeriodStart'),$cLoc,$dateformatter) . 

@@ -60,7 +60,7 @@ class CDbMessageSourceLazy8 extends CDbMessageSource
 	 */
 	protected function translateMessage($category,$message,$language)
 	{
-		$language=Yii::app()->user->getState('languagecode');
+		$language='en';
 		//echo $key;die();
 		$key=$language.'.'.$category;
 		if(!isset($this->_messages[$key]))
@@ -72,7 +72,7 @@ class CDbMessageSourceLazy8 extends CDbMessageSource
 	}
 /*	protected function translateMessage( $category,  $message,  $language)
 	{
-		$language=Yii::app()->user->getState('languagecode');
+		$language='en';
 		$trans=parent::translateMessage( $category,  $message,  $language);
 		
 		return $trans;

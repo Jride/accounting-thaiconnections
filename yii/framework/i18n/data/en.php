@@ -303,9 +303,9 @@ return array (
   'dateFormats' => 
   array (
     'full' => 'EEEE, MMMM d, y',
-    'long' => 'MMMM d, y',
-    'medium' => 'MMM d, y',
-    'short' => 'M/d/yy',
+    'long' => 'd MMMM y',
+    'medium' => 'd MMM y',
+    'short' => 'd/M/y',
   ),
   'timeFormats' => 
   array (

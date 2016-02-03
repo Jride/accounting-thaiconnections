@@ -32,7 +32,7 @@
 <?php echo CHtml::activeLabelEx($model,'dateStart',array('class'=>'help','title'=>Yii::t('lazy8','contexthelp.dateStart'),'onclick'=>'alert(this.title)'));  echo CHtml::activeTextField($model,'dateStart'); 
 $this->widget('application.extensions.calendar.SCalendar',array(	
 			'firstDay'=>'1',
-			'language'=>Yii::app()->user->getState('languagecode'),
+			'language'=>'en',
 			'inputField'=>'Period_dateStart',
 			'ifFormat'=>User::getPhPDateFormat(),
                       )); 
@@ -42,7 +42,7 @@ $this->widget('application.extensions.calendar.SCalendar',array(
 <?php echo CHtml::activeLabelEx($model,'dateEnd',array('class'=>'help','title'=>Yii::t('lazy8','contexthelp.dateEnd'),'onclick'=>'alert(this.title)'));  echo CHtml::activeTextField($model,'dateEnd'); 
 $this->widget('application.extensions.calendar.SCalendar',array(	
 			'firstDay'=>'1',
-			'language'=>Yii::app()->user->getState('languagecode'),
+			'language'=>'en',
 			'inputField'=>'Period_dateEnd',
 			'ifFormat'=>User::getPhPDateFormat(),
                       )); 

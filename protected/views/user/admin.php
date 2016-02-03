@@ -40,7 +40,7 @@
   </tr>
   </thead>
   <tbody>
-<?php	$cLoc=CLocale::getInstance(Yii::app()->user->getState('languagecode')); 
+<?php	$cLoc=CLocale::getInstance('en'); 
 	$dateformatter=new CDateFormatter($cLoc);   foreach($models as $n=>$model): ?>
   <tr class="<?php echo $n%2?'even':'odd';?>">
     <td><?php echo CHtml::encode($model->username); ?></td>

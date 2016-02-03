@@ -87,7 +87,7 @@ class UseTemplateController extends Controller
 		$models=$this->loadTrans($template,$loadTransValue,count($template->templateRows));
 		$this->setDefaults($screen,$models,$template);
 		//show the report
-		$cLoc=CLocale::getInstance(Yii::app()->user->getState('languagecode'));
+		$cLoc=CLocale::getInstance('en');
 		$numberFormatter=$cLoc->getNumberFormatter();
 		$numberFormat=User::getNumberFormat();
 		$previous="";
@@ -268,7 +268,7 @@ class UseTemplateController extends Controller
 	 */
 	private function loadTrans($template,$restore=false,$rowcount=1)
 	{
-		$cLoc=CLocale::getInstance(Yii::app()->user->getState('languagecode'));
+		$cLoc=CLocale::getInstance('en');
 		$numberFormatter=$cLoc->getNumberFormatter();
 		$numberFormat=User::getNumberFormat();
 		$dateformatter=new CDateFormatter($cLoc);
@@ -407,7 +407,7 @@ class UseTemplateController extends Controller
 			$command=Report::model()->dbConnection->createCommand("SELECT TransRow.* FROM TransRow JOIN Account on TransRow.accountId=Account.id WHERE TransRow.transId=".$_GET['id']." ORDER BY Account.code");
 			$transRows=$command->query();
 			$rownum=0;
-			$cLoc=CLocale::getInstance(Yii::app()->user->getState('languagecode'));
+			$cLoc=CLocale::getInstance('en');
 			$numberFormatter=$cLoc->getNumberFormatter();
 			$numberFormat=User::getNumberFormat();
 			$dateformatter=new CDateFormatter($cLoc);
@@ -513,7 +513,7 @@ class UseTemplateController extends Controller
 		}
 		$creditsum=0;
 		$debitsum=0;
-		$cLoc=CLocale::getInstance(Yii::app()->user->getState('languagecode'));
+		$cLoc=CLocale::getInstance('en');
 		$existsBalanceRow=false;
 		$multipleRowNumber=0;
 		foreach($models as $n=>$model)
@@ -559,7 +559,7 @@ class UseTemplateController extends Controller
 	}
 	private function finalAdjustTransFromTemplate(&$models,$template){
 		//find any balance rows and get the balance value
-		$cLoc=CLocale::getInstance(Yii::app()->user->getState('languagecode'));
+		$cLoc=CLocale::getInstance('en');
 		$numberFormatter=$cLoc->getNumberFormatter();
 		$numberFormat=User::getNumberFormat();
 		$existsBalanceRow=false;
@@ -625,7 +625,7 @@ class UseTemplateController extends Controller
 		$models=$this->getFromTempTrans($template,$rowcount);
 		$this->finalAdjustTransFromTemplate($models,$template);
 		$trans=new Trans();
-		$cLoc=CLocale::getInstance(Yii::app()->user->getState('languagecode'));
+		$cLoc=CLocale::getInstance('en');
 		$trans->invDate=User::parseDate($models[0]->invDate,$cLoc);
 		if($isUpdateRegDate)
 			$trans->regDate=date('Y-m-d');
@@ -663,7 +663,7 @@ class UseTemplateController extends Controller
 		if(isset($_POST['TempTrans']))
 			$trans=TempTrans::model()->findAll(array('condition'=>'userId='.Yii::app()->user->id,'order'=>'rownum'));
 		if($trans!==null){
-			$cLoc=CLocale::getInstance(Yii::app()->user->getState('languagecode'));
+			$cLoc=CLocale::getInstance('en');
 			$numberFormatter=$cLoc->getNumberFormatter();
 			$dateformatter=$cLoc->getDateFormatter();
 			$numberFormat=User::getNumberFormat();
@@ -764,7 +764,7 @@ class UseTemplateController extends Controller
 			$model->amountcredit="";
 			$model->userId=Yii::app()->user->id;
 			$model->save();
-			$cLoc=CLocale::getInstance(Yii::app()->user->getState('languagecode'));
+			$cLoc=CLocale::getInstance('en');
 			$model->invDate=User::getDateFormatted($model->invDate,$cLoc);
 			$model->regDate=User::getDateFormatted($model->regDate,$cLoc);
 			$model->dateChanged=$model->regDate;

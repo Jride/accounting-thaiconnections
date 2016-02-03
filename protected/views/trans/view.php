@@ -37,7 +37,7 @@
 <?php echo CHtml::activeLabelEx($models[0],'[0]invDate',array('class'=>'help','title'=>Yii::t('lazy8','contexthelp.invDate'),'onclick'=>'alert(this.title)'));  echo CHtml::activeTextField($models[0],'[0]invDate',array('disabled'=>'true','size'=>15)); 
 $this->widget('application.extensions.calendar.SCalendar',array(	
 			'firstDay'=>'1',
-			'language'=>Yii::app()->user->getState('languagecode'),
+			'language'=>'en',
 			'inputField'=>'TempTrans_0_invDate',
 			'ifFormat'=>User::getPhPDateFormat(),
 			'range'=>"[" . date('Y',strtotime(Yii::app()->user->getState('selectedPeriodStart'))) . "," . date('Y',strtotime(Yii::app()->user->getState('selectedPeriodEnd'))) . "]"

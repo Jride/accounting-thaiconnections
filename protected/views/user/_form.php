@@ -61,7 +61,7 @@
 <?php 
 $calendar=array(	
 			'firstDay'=>'1',
-			'language'=>Yii::app()->user->getState('languagecode'),
+			'language'=>'en',
 			'inputField'=>'fodelsedatum',
 			'ifFormat'=>User::getPhPDateFormat(),
                       ); 
@@ -74,6 +74,20 @@ if(isset($model->useroptions)){
 	<table class="dataGrid" width="550">
 <?php 
 	foreach($useroptions as $n=>$useroption){
+		
+		// echo "<pre>";
+		// var_dump($useroption->name);
+		// echo "</pre>";
+		$enable = true;
+		if($useroption->name == 'NonStandardNumberDecimalFormat' || $useroption->name == 'NonStandardDateFormat'){
+			$enable = false;
+		}
+
+		if(Yii::app()->user->getState('allowAdmin')){ 
+			// User is admin so allow editing of the date and number formatting
+			$enable = true;
+		}
+
 		if(isset($optionTemplate[$useroption->name])){
 			if($optionTemplate[$useroption->name][3]=='false' && ($optionTemplate[$useroption->name][5]=='false' || Yii::app()->user->getState('allowAdmin'))){
 	?>
@@ -84,6 +98,8 @@ if(isset($model->useroptions)){
 	?>
 	</td><td>
 	<?php 
+			// var_dump($optionTemplate[$useroption->name][0]);
+
 			switch($optionTemplate[$useroption->name][0]){
 			case 'DROP_DOWN_LIST':
 				//this eval creats the $list array for the list box.
@@ -93,7 +109,11 @@ if(isset($model->useroptions)){
 			case 'STRING':
 			case 'INTEGER':
 			case 'FLOAT':
-				echo CHtml::textField('option_' . $useroption->name,$useroption->datavalue,array('size'=>'10')); 
+				if($enable)
+					echo CHtml::textField('option_' . $useroption->name,$useroption->datavalue,array('size'=>'10'));
+				else
+					echo CHtml::textField('option_' . $useroption->name,$useroption->datavalue,array(
+						'size'=>'10', 'readonly'=>'readonly', 'disabled'=>'disabled')); 
 				break;
 			case 'DATE':
 				echo CHtml::textField('option_' . $useroption->name,$useroption->datavalue);

@@ -55,7 +55,7 @@ class lazy8tcpdf extends TCPDF {
 						else
 							$displayNum=$numberFormatter->format($numberFormat,$displayNum);
 					}
-					if($repParam->isDate)$displayNum=$dateFormatter->formatDateTime($displayNum,'short',null);
+					if($repParam->isDate)$displayNum=$dateFormatter->formatDateTime($displayNum,'medium',null);
 					if(strlen($header1)==0)
 					{
 						$header1= Yii::t('lazy8',$repParam->name) . ": " . $displayNum;
@@ -255,7 +255,7 @@ class lazy8tcpdf extends TCPDF {
 						else
 							$displayNum=$numberFormatter->format($numberFormat,$displayNum);
 					}
-					if($repParam->isDate)$displayNum=$dateFormatter->formatDateTime($displayNum,'short',null);
+					if($repParam->isDate)$displayNum=$dateFormatter->formatDateTime($displayNum,'medium',null);
 					$this->addCell(Yii::t('lazy8',$repParam->name), 1, 'L', $fill);
 					$this->addCell($displayNum, 1, 'L', $fill);
 					$this->writeRow(array(80,80));
@@ -343,7 +343,7 @@ class lazy8tcpdf extends TCPDF {
 									else
 										$display=$numberFormatter->format($numberFormat,$display);
 								}
-								if($repGroupField->isDate)$display=$dateFormatter->formatDateTime($display,'short',null);
+								if($repGroupField->isDate)$display=$dateFormatter->formatDateTime($display,'medium',null);
 								$this->addCell($this->removeLinks($display), 0, 'L', 0);								
 							}
 							$this->writeRow($this->groupWidths[$nn]);
@@ -380,7 +380,7 @@ class lazy8tcpdf extends TCPDF {
 							else
 								$display=$numberFormatter->format($numberFormat,$display);
 						}
-						if($repRow->isDate)$display=$dateFormatter->formatDateTime($display,'short',null);
+						if($repRow->isDate)$display=$dateFormatter->formatDateTime($display,'medium',null);
 						$this->addCell($this->removeLinks($display), 1, $repRow->isAlignRight?'R':'L', $fill);
 					}else{
 						$displayNum=$row[$repRow->fieldName];
@@ -390,7 +390,7 @@ class lazy8tcpdf extends TCPDF {
 							else
 								$displayNum=$numberFormatter->format($numberFormat,$displayNum);
 						}
-						if($repRow->isDate)$displayNum=$dateFormatter->formatDateTime($displayNum,'short',null);
+						if($repRow->isDate)$displayNum=$dateFormatter->formatDateTime($displayNum,'medium',null);
 						$this->addCell($this->removeLinks($displayNum), 1, $repRow->isAlignRight?'R':'L', $fill);
 					}
 				}

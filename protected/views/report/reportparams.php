@@ -118,7 +118,7 @@ if(isset($repParams)&&count($repParams)>0){
 				echo CHtml::textField($n,$_POST[$n],array('size'=>15)); 
 				$this->widget('application.extensions.calendar.SCalendar',array(	
 							'firstDay'=>'1',
-							'language'=>Yii::app()->user->getState('languagecode'),
+							'language'=>'en',
 							'inputField'=>$n,
 							'ifFormat'=>User::getPhPDateFormat(),
 						      )); 

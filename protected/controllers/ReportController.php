@@ -879,7 +879,7 @@ class ReportController extends CController
 					else
 						Yii::app()->user->setState('reportCssFile',$this->_model->cssColorFileName);
 					//get the number and date formats
-					$cLoc=CLocale::getInstance(Yii::app()->user->getState('languagecode'));
+					$cLoc=CLocale::getInstance('en');
 					$numberFormatter=$cLoc->getNumberFormatter();
 					$dateFormatter=$cLoc->getDateFormatter();
 					$numberFormat=User::getNumberFormat();
@@ -1095,7 +1095,7 @@ class ReportController extends CController
 			else
 				Yii::app()->user->setState('reportCssFile',$this->_model->cssColorFileName);
 			//get the number and date formats
-			$cLoc=CLocale::getInstance(Yii::app()->user->getState('languagecode'));
+			$cLoc=CLocale::getInstance('en');
 			$numberFormatter=$cLoc->getNumberFormatter();
 			$dateFormatter=$cLoc->getDateFormatter();
 			$numberFormat=User::getNumberFormat();
@@ -1353,9 +1353,15 @@ class ReportController extends CController
 			else
 				Yii::app()->user->setState('reportCssFile',$this->_model->cssColorFileName);
 			//get the number and date formats
-			$cLoc=CLocale::getInstance(Yii::app()->user->getState('languagecode'));
+			$cLoc=CLocale::getInstance('en');
 			$numberFormatter=$cLoc->getNumberFormatter();
 			$dateFormatter=$cLoc->getDateFormatter();
+
+			// echo "<pre>";
+			// var_dump($dateFormatter);
+			// echo "</pre>";
+			// die();
+
 			$numberFormat=User::getNumberFormat();
 			$pdf_name = "";
 			$cron_job = FALSE;

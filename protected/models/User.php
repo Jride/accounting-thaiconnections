@@ -212,8 +212,8 @@ class User extends CActiveRecord
 		$this->setOptionStatesAndControlTable($force,false,$webapp,$this->optionsUserTemplate(),0,$this->id);
 		$this->setOptionStatesAndControlTable($force,!isset($this->selectedCompanyId)||$this->selectedCompanyId==0,$webapp,$this->optionsCompanyUserTemplate(),$this->selectedCompanyId,$this->id);
 		$this->setOptionStatesAndControlTable($force,!isset($this->selectedCompanyId)||$this->selectedCompanyId==0,$webapp,$this->optionsCompanyTemplate(),$this->selectedCompanyId,0);
-		//echo Yii::app()->user->getState('languagecode');die();
-		Yii::app()->setLanguage(Yii::app()->user->getState('languagecode'));
+		//echo 'en';die();
+		Yii::app()->setLanguage('en');
 	}
 	
 	/**
@@ -328,8 +328,8 @@ class User extends CActiveRecord
 			'languagecode'=>array('DROP_DOWN_LIST','en','en','false','$ar=array();$msg=Message::model()->findAll(array(\'select\'=>\'distinct language\'));foreach($msg as $a){$ar[]=array(\'id\'=>$a[\'language\'],\'name\'=>yii::t(\'lazy8\',\'languagename.iso636.\'.$a[\'language\']));}$list=CHtml::encodeArray(CHtml::listData($ar,\'id\',\'name\'));','false','false','false','false'),
 			'NumberRecordsPerPage'=>array('INTEGER','20','20','false','','false','false','false','false'),
 			'TransactionEditWidthMultiplier'=>array('FLOAT','1.0','1.0','false','','false','false','false','false'),
-			'NonStandardNumberDecimalFormat'=>array('STRING','','','false','','false','false','false','false'),
-			'NonStandardDateFormat'=>array('STRING','','','false','','false','false','false','false'),
+			'NonStandardNumberDecimalFormat'=>array('STRING','#,##0.0','#,##0.0','false','','false','false','false','false'),
+			'NonStandardDateFormat'=>array('STRING','d MMM yyyy','d MMM yyyy','false','','false','false','false','false'),
 			'PdfPageFormat'=>array('DROP_DOWN_LIST','A4','A4','false','$list=array(\'A4\'=>\'A4\',\'LETTER\'=>\'LETTER\',\'A3\'=>\'A3\',\'A5\'=>\'A5\',\'B4\'=>\'B4\',\'B5\'=>\'B5\',\'B6\'=>\'B6\',\'C4\'=>\'C4\',\'C5\'=>\'C5\',\'E4\'=>\'E4\',\'E5\'=>\'E5\',\'G4\'=>\'G4\',\'G5\'=>\'G5\',\'P3\'=>\'P3\',\'P4\'=>\'P4\',\'LEGAL\'=>\'LEGAL\',\'GLETTER\'=>\'GLETTER\',\'JLEGAL\'=>\'JLEGAL\',\'QUARTO\'=>\'QUARTO\',\'FOLIO\'=>\'FOLIO\',\'EXECUTIVE\'=>\'EXECUTIVE\',\'MEMO\'=>\'MEMO\',\'FOOLSCAP\'=>\'FOOLSCAP\');','false','false','false','false'),
 			'PdfFont'=>array('DROP_DOWN_LIST','helvetica','helvetica','false','$list=array(\'courier\'=>\'courier\',\'dejavusanscondensed\'=>\'dejavusanscondensed\',\'dejavusansmono\'=>\'dejavusansmono\',\'dejavusans\'=>\'dejavusans\',\'dejavuserifcondensed\'=>\'dejavuserifcondensed\',\'dejavuserif\'=>\'dejavuserif\',\'freemono\'=>\'freemono\',\'freesans\'=>\'freesans\',\'freeserif\'=>\'freeserif\',\'helvetica\'=>\'helvetica\',\'times\'=>\'times\');','false','false','false','false'),
 			'PdfFontSize'=>array('DROP_DOWN_LIST','8','8','false','$list=array(6=>6,7=>7,8=>8,9=>9,10=>10,11=>11,12=>12,13=>13,14=>14);','false','false','false','false'),
@@ -483,12 +483,12 @@ Powered by <a href=\"http://yiiframework.com/\">Yii Framework</a>";
 	}
 	public static function getPhPDateFormat($locale=null){
 		//convert the format to PHP date format
-		return str_replace(array('MM','M','dd','d','%%d','yyyy','yy'),array('%m','%m','%d','%d','%d','%Y','%y',),User::getDateFormat($locale));
+		return str_replace(array('MMM','MM','M','dd','d','%%d','yyyy','yy'),array('%b','%m','%m','%d','%d','%d','%Y','%y',),User::getDateFormat($locale));
 	}
 	public static function getDateFormatted($dateToFormat,$locale=null,$formatter=null){
 		if(strlen($dateToFormat)==0)return "";
 		if($locale==null)
-			$locale=CLocale::getInstance(Yii::app()->user->getState('languagecode'));
+			$locale=CLocale::getInstance('en');
 		if($locale==null)
 			$locale=CLocale::getInstance();
 		if ($formatter==null)
@@ -503,19 +503,25 @@ Powered by <a href=\"http://yiiframework.com/\">Yii Framework</a>";
 		$dateFormat=trim(Yii::app()->user->getState('NonStandardDateFormat'));
 		if(strlen($dateFormat)==0){
 			if($locale==null)
-				$locale=CLocale::getInstance(Yii::app()->user->getState('languagecode'));
+				$locale=CLocale::getInstance('en');
 			if($locale==null)
 				$locale=CLocale::getInstance();
-			return $locale->getDateFormat('short');
+			return $locale->getDateFormat('medium');
 		}
-		return $dateFormat;
+		return $dateFormat;	
+
+		// if($locale==null)
+		// 		$locale=CLocale::getInstance('en');
+		// 	if($locale==null)
+		// 		$locale=CLocale::getInstance();
+		// 	return $locale->getDateFormat('medium');
 	}
 	public static function getNumberFormat(){
 		$numberFormat=trim(Yii::app()->user->getState('NonStandardNumberDecimalFormat'));
 		if(strlen($numberFormat)>0){
 			return $numberFormat;
 		}else{
-			$cLoc=CLocale::getInstance(Yii::app()->user->getState('languagecode'));
+			$cLoc=CLocale::getInstance('en');
 			if($cLoc==null)
 				$cLoc=CLocale::getInstance();
 			return $cLoc->getDecimalFormat();
