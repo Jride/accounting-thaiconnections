@@ -477,6 +477,12 @@ Powered by <a href=\"http://yiiframework.com/\">Yii Framework</a>";
 		//return mysql formatted time , that is, Y-m-d
 		return User::leading_zeros($resultArray['Y'],4) . '-' .  User::leading_zeros($resultArray['m'],2) . '-' .  User::leading_zeros($resultArray['d'],2) ;
 	}
+
+	public static function parseCustomDate($toParse){
+		$date = DateTime::createFromFormat('d MMM Y', $toParse);
+		return date_format($date, 'd/m/Y');
+	}
+
 	public static function getPhPDateFormatNoPercent($locale=null){
 		//convert the format to PHP date format
 		return str_replace(array('MMM','MM','M','dd','d','%%d','yyyy','yy'),array('MMM','m','m','d','d','d','Y','y',),User::getDateFormat($locale));
@@ -487,12 +493,25 @@ Powered by <a href=\"http://yiiframework.com/\">Yii Framework</a>";
 	}
 	public static function getPhPDateFormatDatePicker($locale=null){
 		//convert the format to PHP date format
-		$dateFormat='d/MM/yyyy';
+		$dateFormat='yyyy-M-d';
+		return str_replace(array('MMM','MM','M','dd','d','%%d','yyyy','yy'),array('%b','%m','%m','%d','%d','%d','%Y','%y',),$dateFormat);
+	}
+	public static function getPhPDateFormatDatePickerReports($locale=null){
+		//convert the format to PHP date format
+		$dateFormat='d/M/yyyy';
 		return str_replace(array('MMM','MM','M','dd','d','%%d','yyyy','yy'),array('%b','%m','%m','%d','%d','%d','%Y','%y',),$dateFormat);
 	}
 	public static function getDateFormattedDatePicker($dateToFormat){
 		$date = DateTime::createFromFormat('d M Y', $dateToFormat);
+		return date_format($date, 'Y-m-d');
+	}
+	public static function getDateFormattedDatePickerReports($dateToFormat){
+		$date = DateTime::createFromFormat('d M Y', $dateToFormat);
 		return date_format($date, 'd/m/Y');
+	}
+	public static function transactionDatePicker($dateToFormat){
+		$date = DateTime::createFromFormat('d M Y', $dateToFormat);
+		return date_format($date, 'Y-m-d');
 	}
 	public static function getDateFormatted($dateToFormat,$locale=null,$formatter=null){
 		if(strlen($dateToFormat)==0)return "";

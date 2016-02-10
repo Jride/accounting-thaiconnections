@@ -251,6 +251,7 @@ class SiteController extends CController
 			if($form->validate()){
 				User::checkAndFixTable();
 				Yii::app()->session['accountNumbers'] = $_POST['LoginForm']['accountNumbers'];
+				Yii::app()->session['accountTags'] = $_POST['LoginForm']['accountTags'];
 				Yii::app()->session['reportIds'] = $_POST['LoginForm']['reportIds'];
 				$this->redirect(Yii::app()->user->returnUrl);
 			}

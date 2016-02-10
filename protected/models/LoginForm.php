@@ -30,6 +30,7 @@ class LoginForm extends CFormModel
 	public $password;
 	public $rememberMe;
 	public $accountNumbers;
+	public $accountTags;
 	public $reportIds;
 
 	/**
@@ -59,6 +60,7 @@ class LoginForm extends CFormModel
 			'username'=>Yii::t('lazy8','User name'),
 			'password'=>Yii::t('lazy8','Password'),
 			'accountNumbers'=>Yii::t('lazy8','Account numbers the user can view'),
+			'accountTags'=>Yii::t('lazy8','List of accounts the user can view reports on'),
 			'reportIds'=>Yii::t('lazy8','Reports the the user can view')
 		);
 	}

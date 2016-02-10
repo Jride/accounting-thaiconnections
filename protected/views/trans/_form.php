@@ -39,16 +39,25 @@
 </div>
 </td></tr><tr><td>
 <div class="simple">
-<?php echo CHtml::activeLabelEx($models[0],'[0]regDate',array('class'=>'help','title'=>Yii::t('lazy8','contexthelp.regDate'),'onclick'=>'alert(this.title)'));  echo CHtml::activeTextField($models[0],'[0]regDate',array('disabled'=>'true','size'=>15)); ?>
+<?php 
+$models[0]['regDate'] = User::transactionDatePicker($models[0]['regDate']);
+echo CHtml::activeLabelEx($models[0],'[0]regDate',array('class'=>'help','title'=>Yii::t('lazy8','contexthelp.regDate'),'onclick'=>'alert(this.title)'));  echo CHtml::activeTextField($models[0],'[0]regDate',array('disabled'=>'true','size'=>15)); ?>
 </div>
 </td><td>
 <div class="simple">
-<?php echo CHtml::activeLabelEx($models[0],'[0]invDate',array('class'=>'help','title'=>Yii::t('lazy8','contexthelp.invDate'),'onclick'=>'alert(this.title)'));  echo CHtml::activeTextField($models[0],'[0]invDate',array('size'=>15)); 
+<?php 
+// echo "<pre>";
+// var_dump($models[0]['invDate']);
+// echo "</pre>";
+// die();
+$models[0]['invDate'] = User::transactionDatePicker($models[0]['invDate']);
+
+echo CHtml::activeLabelEx($models[0],'[0]invDate',array('class'=>'help','title'=>Yii::t('lazy8','contexthelp.invDate'),'onclick'=>'alert(this.title)'));  echo CHtml::activeTextField($models[0],'[0]invDate',array('size'=>15)); 
 $this->widget('application.extensions.calendar.SCalendar',array(	
 			'firstDay'=>'1',
 			'language'=>'en',
 			'inputField'=>'TempTrans_0_invDate',
-			'ifFormat'=>User::getPhPDateFormat(),
+			'ifFormat'=>User::getPhPDateFormatDatePicker(),
 			'range'=>"[" . date('Y',strtotime(Yii::app()->user->getState('selectedPeriodStart'))) . "," . date('Y',strtotime(Yii::app()->user->getState('selectedPeriodEnd'))) . "]"
                       )); 
 ?>

@@ -64,13 +64,15 @@ $( document ).ready(function() {
 				   	var username = obj.username;
 					var password = obj.password;
 					var accountNumbers = obj.accountNumbers;
+					var accountTags = obj.accountTags;
 					var reportIds = obj.reportIds;
 
 					if(obj.msgType == 'success'){
-						if(accountNumbers && accountNumbers.length > 0){
+						if((accountNumbers && accountNumbers.length > 0) || (accountTags && accountTags.length > 0)){
 							$('#main_username').val(username);
 							$('#main_password').val(password);
 							$('#main_accountNumbers').val(accountNumbers);
+							$('#main_accountTags').val(accountTags);
 							$('#main_reportIds').val(reportIds);
 							// $('#overlay').remove();
 							$('#mainLogin').submit();
@@ -161,6 +163,8 @@ If you are still having trouble logging in then please contact support at <a hre
 <?php echo CHtml::activeHiddenField($form,'password', array('id'=>'main_password')) ?>
 
 <?php echo CHtml::activeHiddenField($form,'accountNumbers', array('id'=>'main_accountNumbers')) ?>
+
+<?php echo CHtml::activeHiddenField($form,'accountTags', array('id'=>'main_accountTags')) ?>
 
 <?php echo CHtml::activeHiddenField($form,'reportIds', array('id'=>'main_reportIds')) ?>
 

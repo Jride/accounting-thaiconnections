@@ -190,7 +190,10 @@ class TransController extends CController
 					//delete the old trans
 					$trans->delete();//must delete first to be able to use the transnums
 					//copy temp trans to a new Trans/TransRow
-					$tempdate=User::parseDate($models[0]->invDate);
+					$tmpDate = date_create_from_format('d M Y', $models[0]->invDate);
+					$tempdate = date_format($tmpDate, 'Y-m-d');
+					// $tempdate=User::parseDate($models[0]->invDate);
+
 					$changedTrans=$this->copyTempTransToNewTrans($trans->periodNum,$trans->companyNum);
 					//clear temptrans
 					Trans::model()->dbConnection->createCommand("DELETE FROM TempTrans WHERE userId=". Yii::app()->user->id)->execute();
@@ -225,7 +228,11 @@ class TransController extends CController
 				$comp->save();
 				$per->save();
 				//copy temp trans to a new Trans/TransRow
-				$tempdate=User::parseDate($models[0]->invDate);
+
+				$tmpDate = date_create_from_format('d M Y', $models[0]->invDate);
+				$tempdate = date_format($tmpDate, 'Y-m-d');
+				// $tempdate=User::parseDate($models[0]->invDate);
+
 				$addedTrans=$this->copyTempTransToNewTrans($per->lastPeriodTransNum,$comp->lastAbsTransNum,true);
 				ChangeLog::addLog('ADD','Trans',$addedTrans->toString());
 				//clear temptrans
@@ -356,9 +363,12 @@ class TransController extends CController
 		}else{
 			//same thing as Clear
 			$models=$this->getFromTempTrans();
-			$tempdate=date('Y-m-d H:i:s');
-			if($models!=null && count($models)>0)
-				$tempdate=User::parseDate($models[0]->invDate);
+			$tempdate = date_create('Y-m-d');
+			// if($models!=null && count($models)>0){
+			// 	// $tmpDate = date_create_from_format('d M Y', $models[0]->invDate);
+			// 	// $tempdate = date_format($tmpDate, 'd/m/Y');
+			// 	$tempdate = date_create('d/m/Y');
+			// }
 			//echo $tempdate;die();
 			Trans::model()->dbConnection->createCommand("DELETE FROM TempTrans WHERE userId=". Yii::app()->user->id)->execute();
 			$models=array();
@@ -413,7 +423,11 @@ class TransController extends CController
 			}
 		}
 		//invoice date must be correct
-		$invDate=User::parseDate($models[0]->invDate);
+
+		$tmpDate = date_create_from_format('d M Y', $models[0]->invDate);
+		$invDate = date_format($tmpDate, 'Y-m-d');
+		// $invDate=User::parseDate($invDate);
+
 		if(strtotime($invDate)<strtotime($per->dateStart) || strtotime($invDate)>strtotime($per->dateEnd)){
 			$models[0]->addError('[0]invDate',Yii::t('lazy8','The invoice date is not within the allowed range')
 				.' ; '.$models[0]->invDate.'>='.User::getDateFormatted($per->dateStart). ' AND ' .$models[0]->invDate.'<=' .User::getDateFormatted($per->dateEnd));
@@ -446,11 +460,17 @@ class TransController extends CController
 		$models=$this->getFromTempTrans();
 		$trans=new Trans();
 		$cLoc=CLocale::getInstance('en');
-		$trans->invDate=User::parseDate($models[0]->invDate,$cLoc);
-		if($isUpdateRegDate)
+		
+		$tmpDate = date_create_from_format('d M Y', $models[0]->invDate);
+		$trans->invDate = date_format($tmpDate, 'Y-m-d');
+		// $trans->invDate=User::parseDate($models[0]->invDate,$cLoc);
+		
+		if($isUpdateRegDate){
 			$trans->regDate=date('Y-m-d');
-		else
-			$trans->regDate=User::parseDate($models[0]->regDate,$cLoc);
+		}else{
+			$tmpDate = date_create_from_format('d M Y', $models[0]->regDate);
+			$trans->regDate=date_format($tmpDate, 'Y-m-d');
+		}
 		$trans->periodNum=$periodNum;
 		$trans->companyNum=$companyNum;
 		$trans->notes=$models[0]->notesheader;
@@ -496,7 +516,7 @@ class TransController extends CController
 					$transrow->attributes=$_POST['TempTrans'][$transrow->rownum];
 					$amountdebit=$this->parseNumber($transrow->amountdebit,$cLoc);
 					$amountcredit=$this->parseNumber($transrow->amountcredit,$cLoc);
-					$transrow->invDate=User::parseDate($transrow->invDate,$cLoc);
+					$transrow->invDate= User::parseDate($transrow->invDate,$cLoc);
 					if($amountdebit!=0 and $amountcredit!=0){
 						//keep only the newly added amount
 						if($olddebit!='')

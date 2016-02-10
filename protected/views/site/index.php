@@ -37,6 +37,7 @@ if(!Yii::app()->user->isGuest){
   echo Yii::t("lazy8",'welcome.message.first.page');
 
   $accountNumbers = Yii::app()->session['accountNumbers'];
+  $accountTags = Yii::app()->session['accountTags'];
   // echo $accountNumbers;
 }else{ 
  echo Yii::t("lazy8",'If you are a registered user to the Thaiconnections website and would like to view/generate reports for your
