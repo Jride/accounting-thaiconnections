@@ -13,15 +13,11 @@
 		Account.code AS accountcode, &#13;
 		Account.name AS accountname,&#13;
 		IF(amount&lt;0, 0, amount) AS Debit,&#13;
-		IF(amount&lt;0,-amount,0) AS Credit,&#13;
-		CONCAT(Customer.code, ' - ', Customer.name) AS Tag,&#13;
-		CONCAT(Donor.code, ' - ', Donor.name) AS Donor&#13;
+		IF(amount&lt;0,-amount,0) AS Credit &#13;
 FROM TransRow&#13;
 LEFT JOIN Donor on TransRow.donorId=Donor.id&#13;
 JOIN Trans ON TransRow.transId=Trans.id &#13;
 JOIN Account ON TransRow.accountId=Account.id&#13;
-LEFT JOIN AccountCustomerAssignment on Account.id=AccountCustomerAssignment.accountId&#13;
-LEFT JOIN Customer on Customer.id=AccountCustomerAssignment.customerId&#13;
 LEFT JOIN (&#13;
 	SELECT IF(isInBalance,TRIM(TRAILING 0 FROM ROUND(SUM(amount),5)),0) AS 'ingoing',&#13;
 	accountId &#13;
@@ -108,28 +104,22 @@ ORDER BY TransRow.accountId,Trans.invDate</selectsql>
     <rows sortorder="1" fieldname="TransNum" fieldwidth="10px" row="0" issummed="false" isalignright="false" isdate="false" isdecimal="false">
       <fieldcalc></fieldcalc>
     </rows>
-    <rows sortorder="2" fieldname="invDate" fieldwidth="10px" row="0" issummed="false" isalignright="false" isdate="true" isdecimal="false">
+    <rows sortorder="2" fieldname="invDate" fieldwidth="23px" row="0" issummed="false" isalignright="false" isdate="true" isdecimal="false">
       <fieldcalc></fieldcalc>
     </rows>
-    <rows sortorder="3" fieldname="Notes" fieldwidth="35px" row="0" issummed="false" isalignright="false" isdate="false" isdecimal="false">
+    <rows sortorder="3" fieldname="Notes" fieldwidth="40px" row="0" issummed="false" isalignright="false" isdate="false" isdecimal="false">
       <fieldcalc></fieldcalc>
     </rows>
     <rows sortorder="4" fieldname="rownotes" fieldwidth="20px" row="0" issummed="false" isalignright="false" isdate="false" isdecimal="false">
       <fieldcalc></fieldcalc>
     </rows>
-    <rows sortorder="5" fieldname="Tag" fieldwidth="25px" row="0" issummed="false" isalignright="false" isdate="false" isdecimal="false">
+    <rows sortorder="6" fieldname="Debit" fieldwidth="23px" row="0" issummed="true" isalignright="true" isdate="false" isdecimal="true">
       <fieldcalc></fieldcalc>
     </rows>
-    <rows sortorder="6" fieldname="Donor" fieldwidth="25px" row="" issummed="false" isalignright="false" isdate="false" isdecimal="false">
+    <rows sortorder="7" fieldname="Credit" fieldwidth="23px" row="0" issummed="true" isalignright="true" isdate="false" isdecimal="true">
       <fieldcalc></fieldcalc>
     </rows>
-    <rows sortorder="7" fieldname="Debit" fieldwidth="23px" row="0" issummed="true" isalignright="true" isdate="false" isdecimal="true">
-      <fieldcalc></fieldcalc>
-    </rows>
-    <rows sortorder="8" fieldname="Credit" fieldwidth="23px" row="0" issummed="true" isalignright="true" isdate="false" isdecimal="true">
-      <fieldcalc></fieldcalc>
-    </rows>
-    <rows sortorder="9" fieldname="balance" fieldwidth="23px" row="0" issummed="false" isalignright="true" isdate="false" isdecimal="true">
+    <rows sortorder="8" fieldname="balance" fieldwidth="23px" row="0" issummed="false" isalignright="true" isdate="false" isdecimal="true">
       <fieldcalc>$display=$row['ingoing']+ $sums['Debit'] -$sums['Credit'];</fieldcalc>
     </rows>
   </report>
