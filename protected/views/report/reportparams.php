@@ -52,11 +52,13 @@ if(Yii::app()->user->name == "ReportsOnlyUser"){
 	$newReports = array();
 	foreach ($reports as $key => $value) {
 		if(strpos($value,'ReportsOnlyUser') !== false){
-			if(in_array($key, $reportAccess)){
-				// User has access to this report
-				$value = str_replace(" ReportsOnlyUser", "", $value);
-				$newReports[$key] = $value;
-			}
+			// if(in_array($key, $reportAccess)){
+			// 	// User has access to this report
+			// 	$value = str_replace(" ReportsOnlyUser", "", $value);
+			// 	$newReports[$key] = $value;
+			// }
+			$value = str_replace(" ReportsOnlyUser", "", $value);
+			$newReports[$key] = $value;
 		}
 	}
 	$reports = $newReports;

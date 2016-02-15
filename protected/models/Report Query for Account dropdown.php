@@ -44,6 +44,8 @@
 	$accountList = ' AND code IN ('.$accountNumbers.')';
  }
 
+ var_dump($accountList);
+
  $sqlList=CHtml::encodeArray(CHtml::listData(Account::model()->findAll(
  	array(
  		'condition'=>'companyId='.Yii::app()->user->getState('selectedCompanyId').$accountList,
@@ -53,6 +55,22 @@
 
  $sqlList['']='';
 
-   $accountList = '';   if(Yii::app()->user->name == "ReportsOnlyUser"){   	$accountNumbers = Yii::app()->session['accountNumbers']; 	 	if(strpos($accountNumbers,'101059') == false){ 		$accountNumbers .= ',101059'; 	} 	 	$accountList = ' AND code IN ('.$accountNumbers.')';  }   $sqlList=CHtml::encodeArray(CHtml::listData(Account::model()->findAll(  	array(  		'condition'=>'companyId='.Yii::app()->user->getState('selectedCompanyId').$accountList,  		'select'=>'CONCAT(\'AND Account.code=\',code) as code, CAST(CONCAT(code,\' \',name) AS CHAR CHARACTER SET utf8) as name',  		'order'=>'code')  	),'code','name'));    $sqlList['']='';
+// ***********************************
+
+ $accountList = '';   
+ if(Yii::app()->user->name == "ReportsOnlyUser"){   	
+ 	$accountNumbers = Yii::app()->session['accountNumbers']; 	 	
+ 	if(strpos($accountNumbers,'101059') == false){ 		
+ 		$accountNumbers .= ',101059'; 	
+ 	} 	 	
+ 	$accountList = ' AND code IN ('.$accountNumbers.')';  
+ }   
+
+ $sqlList=CHtml::encodeArray(CHtml::listData(Account::model()->findAll(  	array(  		'condition'=>'companyId='.Yii::app()->user->getState('selectedCompanyId').$accountList,  		'select'=>'CONCAT(\'AND Account.code=\',code) as code, CAST(CONCAT(code,\' \',name) AS CHAR CHARACTER SET utf8) as name',  		'order'=>'code')  	),'code','name'));   
+  $sqlList['']='';
+
+  $sqlList=CHtml::encodeArray(CHtml::listData(Account::model()->findAll(array('condition'=>'companyId=' 	.Yii::app()->user->getState('selectedCompanyId'),'select'=>'CONCAT(\'AND Account.id=\',id) as  id, CAST(CONCAT(code,\' \',name) AS CHAR CHARACTER SET utf8) as name','order'=>'code')),'id','name'));
+  $sqlList['']='';
 
  ?>
+
