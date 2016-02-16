@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<lazy8webportreport version="1.00">
+  <report name="Transactions">
+    <desc>Each transaction created within the given criteria</desc>
+    <selectsql>select CONCAT('&lt;a href="{url}?r=trans/update&amp;id=',Trans.id,'"  target="_blank"&gt;',{TransNumField},'&lt;/a&gt;') as TransNum, Trans.*,Trans.notes as Notes,TransRow.notes as rownotes, Account.code as accountcode, Account.name as accountname,CAST(CONCAT(Customer.code,' ', Customer.name) AS CHAR CHARACTER SET utf8) as CustomerName, IF(amount&lt;0, 0, amount) as Debit,IF(amount&lt;0,-amount,0) as Credit from TransRow join &#13;
+Trans on TransRow.transId=Trans.id JOIN Account on TransRow.accountId=Account.id LEFT join Customer on customerId=Customer.id WHERE Trans.companyId={companyId} AND Trans.invDate&gt;=DATE '{startDate}' AND Trans.invDate&lt;=DATE '{stopDate}' &#13;
+AND {TransNumField}&gt;=CAST('{startTransNum}' as UNSIGNED) AND IF(CAST('{endTransNum}' as UNSIGNED)&gt;0,({TransNumField}&lt;=CAST('{endTransNum}' as UNSIGNED)),true) ORDER BY companyNum</selectsql>
+    <csscolorfilename>reportcolor.css</csscolorfilename>
+    <cssbwfilename>reportbw.css</cssbwfilename>
+    <sortOrder>3</sortOrder>
+    <parameter sortorder="1" name="Title" alias="" datatype="FREE_TEXT" isdefaultphp="false" isdate="false" isdecimal="false">
+      <desc>A text that will show only in the header of the report and should describe the report</desc>
+      <phpsecondaryinfo></phpsecondaryinfo>
+      <defaultvalue></defaultvalue>
+    </parameter>
+    <parameter sortorder="2" name="Report type" alias="" datatype="HIDDEN_SHOW_HEAD" isdefaultphp="true" isdate="false" isdecimal="false">
+      <desc></desc>
+      <phpsecondaryinfo></phpsecondaryinfo>
+      <defaultvalue>$defaultValue=Yii::t('lazy8','Transactions');</defaultvalue>
+    </parameter>
+    <parameter sortorder="3" name="Company" alias="{companyId}" datatype="HIDDEN_SHOW_HEAD" isdefaultphp="true" isdate="false" isdecimal="false">
+      <desc></desc>
+      <phpsecondaryinfo>$defaultValue=Yii::app()-&gt;user-&gt;getState('selectedCompany');</phpsecondaryinfo>
+      <defaultvalue>$defaultValue=Yii::app()-&gt;user-&gt;getState('selectedCompanyId');</defaultvalue>
+    </parameter>
+    <parameter sortorder="4" name="User" alias="" datatype="HIDDEN_SHOW_HEAD" isdefaultphp="true" isdate="false" isdecimal="false">
+      <desc></desc>
+      <phpsecondaryinfo></phpsecondaryinfo>
+      <defaultvalue>$defaultValue=Yii::app()-&gt;user-&gt;getState('displayname');</defaultvalue>
+    </parameter>
+    <parameter sortorder="5" name="Last used transaction" alias="" datatype="HIDDEN_SHOW_HEAD" isdefaultphp="true" isdate="false" isdecimal="false">
+      <desc></desc>
+      <phpsecondaryinfo></phpsecondaryinfo>
+      <defaultvalue>$defaultValue=Yii::app()-&gt;user-&gt;getState('showPeriodTransactionNumber')? Period::model()-&gt;findbyPk(Yii::app()-&gt;user-&gt;getState('selectedPeriodId'))-&gt;lastPeriodTransNum :Company::model()-&gt;findbyPk(Yii::app()-&gt;user-&gt;getState('selectedCompanyId'))-&gt;lastAbsTransNum;</defaultvalue>
+    </parameter>
+    <parameter sortorder="6" name="Start date" alias="{startDate}" datatype="DATE" isdefaultphp="true" isdate="true" isdecimal="false">
+      <desc>The start date for the report</desc>
+      <phpsecondaryinfo></phpsecondaryinfo>
+      <defaultvalue>$defaultValue=Yii::app()-&gt;user-&gt;getState('selectedPeriodStart');</defaultvalue>
+    </parameter>
+    <parameter sortorder="7" name="End date" alias="{stopDate}" datatype="DATE" isdefaultphp="true" isdate="true" isdecimal="false">
+      <desc>The end date for the report</desc>
+      <phpsecondaryinfo></phpsecondaryinfo>
+      <defaultvalue>$defaultValue=Yii::app()-&gt;user-&gt;getState('selectedPeriodEnd');</defaultvalue>
+    </parameter>
+    <parameter sortorder="8" name="Start trans num" alias="{startTransNum}" datatype="FREE_TEXT" isdefaultphp="false" isdate="false" isdecimal="false">
+      <desc>If desired, choose just one account to show</desc>
+      <phpsecondaryinfo></phpsecondaryinfo>
+      <defaultvalue></defaultvalue>
+    </parameter>
+    <parameter sortorder="9" name="End trans num" alias="{endTransNum}" datatype="FREE_TEXT" isdefaultphp="false" isdate="false" isdecimal="false">
+      <desc></desc>
+      <phpsecondaryinfo></phpsecondaryinfo>
+      <defaultvalue></defaultvalue>
+    </parameter>
+    <parameter sortorder="10" name="" alias="{TransNumField}" datatype="HIDDEN_NO_SHOW_HEAD" isdefaultphp="true" isdate="false" isdecimal="false">
+      <desc></desc>
+      <phpsecondaryinfo></phpsecondaryinfo>
+      <defaultvalue>$defaultValue=Yii::app()-&gt;user-&gt;getState('showPeriodTransactionNumber')=='true'?'Trans.periodNum':'companyNum';</defaultvalue>
+    </parameter>
+    <parameter sortorder="11" name="Todays date" alias="" datatype="HIDDEN_SHOW_HEAD" isdefaultphp="true" isdate="true" isdecimal="false">
+      <desc></desc>
+      <phpsecondaryinfo></phpsecondaryinfo>
+      <defaultvalue>$defaultValue=date('Y-m-d');</defaultvalue>
+    </parameter>
+    <parameter sortorder="12" name="Url" alias="{url}" datatype="HIDDEN_NO_SHOW_HEAD" isdefaultphp="true" isdate="false" isdecimal="false">
+      <desc></desc>
+      <phpsecondaryinfo></phpsecondaryinfo>
+      <defaultvalue>$defaultValue=Yii::app()-&gt;request-&gt;hostInfo . Yii::app()-&gt;request-&gt;scriptUrl;</defaultvalue>
+    </parameter>
+    <group sortorder="1" breakingfield="TransNum" pagebreak="false" showgrid="false" showheader="true" continuesumsovergroup="false">
+      <field sortorder="1" fieldname="TransNum" fieldwidth="10" row="" isdate="false" isdecimal="false">
+        <fieldcalc></fieldcalc>
+      </field>
+      <field sortorder="2" fieldname="invDate" fieldwidth="20" row="" isdate="true" isdecimal="false">
+        <fieldcalc></fieldcalc>
+      </field>
+      <field sortorder="3" fieldname="Notes" fieldwidth="40" row="" isdate="false" isdecimal="false">
+        <fieldcalc></fieldcalc>
+      </field>
+      <field sortorder="4" fieldname="fileInfo" fieldwidth="10" row="1" isdate="false" isdecimal="false">
+        <fieldcalc></fieldcalc>
+      </field>
+      <field sortorder="5" fieldname="regDate" fieldwidth="20" row="1" isdate="true" isdecimal="false">
+        <fieldcalc></fieldcalc>
+      </field>
+    </group>
+    <rows sortorder="1" fieldname="accountcode" fieldwidth="10px" row="" issummed="false" isalignright="false" isdate="false" isdecimal="false">
+      <fieldcalc></fieldcalc>
+    </rows>
+    <rows sortorder="2" fieldname="accountname" fieldwidth="40px" row="" issummed="false" isalignright="false" isdate="false" isdecimal="false">
+      <fieldcalc></fieldcalc>
+    </rows>
+    <rows sortorder="4" fieldname="rownotes" fieldwidth="20px" row="" issummed="false" isalignright="false" isdate="false" isdecimal="false">
+      <fieldcalc></fieldcalc>
+    </rows>
+    <rows sortorder="5" fieldname="CustomerName" fieldwidth="20px" row="" issummed="false" isalignright="false" isdate="false" isdecimal="false">
+      <fieldcalc></fieldcalc>
+    </rows>
+    <rows sortorder="6" fieldname="Debit" fieldwidth="23px" row="" issummed="true" isalignright="true" isdate="false" isdecimal="true">
+      <fieldcalc></fieldcalc>
+    </rows>
+    <rows sortorder="7" fieldname="Credit" fieldwidth="23px" row="" issummed="true" isalignright="true" isdate="false" isdecimal="true">
+      <fieldcalc></fieldcalc>
+    </rows>
+  </report>
+</lazy8webportreport>

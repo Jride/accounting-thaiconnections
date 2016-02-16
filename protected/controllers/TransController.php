@@ -363,12 +363,15 @@ class TransController extends CController
 		}else{
 			//same thing as Clear
 			$models=$this->getFromTempTrans();
-			$tempdate = date_create('Y-m-d');
-			// if($models!=null && count($models)>0){
-			// 	// $tmpDate = date_create_from_format('d M Y', $models[0]->invDate);
-			// 	// $tempdate = date_format($tmpDate, 'd/m/Y');
-			// 	$tempdate = date_create('d/m/Y');
-			// }
+			$tempdate = date('Y-m-d');
+			if($models!=null && count($models)>0){
+				$tmpDate = date_create_from_format('d M Y', $models[0]->invDate);
+				if($tmpDate){
+					$tempdate = date_format($tmpDate, 'Y-m-d');
+				}else{
+					$tempdate = date('Y-m-d');
+				}
+			}
 			//echo $tempdate;die();
 			Trans::model()->dbConnection->createCommand("DELETE FROM TempTrans WHERE userId=". Yii::app()->user->id)->execute();
 			$models=array();
@@ -496,6 +499,7 @@ class TransController extends CController
 		}
 		return $trans;
 	}
+	
 	private function getFromTempTrans()
 	{
 		$trans=TempTrans::model()->findAll(array('condition'=>'userId='.Yii::app()->user->id,'order'=>'rownum'));
@@ -516,7 +520,21 @@ class TransController extends CController
 					$transrow->attributes=$_POST['TempTrans'][$transrow->rownum];
 					$amountdebit=$this->parseNumber($transrow->amountdebit,$cLoc);
 					$amountcredit=$this->parseNumber($transrow->amountcredit,$cLoc);
-					$transrow->invDate= User::parseDate($transrow->invDate,$cLoc);
+					
+					$tmpDate = date_create_from_format('', $transrow->invDate);
+					if($tmpDate){
+						$tempdate = date_format($tmpDate, 'Y-m-d');
+					}else{
+						if(!date_create_from_format('Y-m-d', $transrow->invDate)){
+							$tempdate = date('Y-m-d');
+						}else{
+							$tempdate = $transrow->invDate;
+						}
+					}
+					$transrow->invDate = $tempdate;
+
+					// $transrow->invDate= User::parseDate($transrow->invDate,$cLoc);
+
 					if($amountdebit!=0 and $amountcredit!=0){
 						//keep only the newly added amount
 						if($olddebit!='')
@@ -561,6 +579,7 @@ class TransController extends CController
 		}
 		return $models;
 	}
+
 	private function getBlankTempTrans($rownum,$invDate=null)
 	{
 		$comp=Company::model()->findbyPk(Yii::app()->user->getState('selectedCompanyId'));

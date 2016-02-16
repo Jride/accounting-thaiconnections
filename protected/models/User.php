@@ -510,8 +510,13 @@ Powered by <a href=\"http://yiiframework.com/\">Yii Framework</a>";
 		return date_format($date, 'd/m/Y');
 	}
 	public static function transactionDatePicker($dateToFormat){
-		$date = DateTime::createFromFormat('d M Y', $dateToFormat);
-		return date_format($date, 'Y-m-d');
+		$tmpdate = date_create_from_format('d M Y', $dateToFormat);
+		if($tmpdate){
+			$date = date_format($tmpdate, 'Y-m-d');
+		}else{
+			$date = date('Y-m-d');
+		}
+		return $date;
 	}
 	public static function getDateFormatted($dateToFormat,$locale=null,$formatter=null){
 		if(strlen($dateToFormat)==0)return "";
