@@ -4,8 +4,7 @@ SELECT
 	Trans.notes as Notes,
 	TransRow.notes as rownotes, 
 	Account.code as accountcode, 
-	Account.name as accountname,
-	CAST(CONCAT(Customer.code,' ', Customer.name) AS CHAR CHARACTER SET utf8) as CustomerName, 
+	Account.name as accountname, 
 	IF(amount<0, 0, amount) as Debit,
 	IF(amount<0,-amount,0) as Credit,
 	CONCAT(Customer.code, ' - ', Customer.name) AS Tag,
@@ -13,9 +12,9 @@ SELECT
 FROM TransRow 
 JOIN Trans ON TransRow.transId=Trans.id 
 JOIN Account ON TransRow.accountId=Account.id
-
-LEFT join Customer ON customerId=Customer.id 
-
+LEFT JOIN Donor on TransRow.donorId=Donor.id
+LEFT JOIN AccountCustomerAssignment on Account.id=AccountCustomerAssignment.accountId
+LEFT JOIN Customer on Customer.id=AccountCustomerAssignment.customerId
 WHERE Trans.companyId={companyId} 
 AND Trans.invDate>=DATE '{startDate}' 
 AND Trans.invDate<=DATE '{stopDate}' 
