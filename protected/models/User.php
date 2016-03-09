@@ -506,6 +506,9 @@ Powered by <a href=\"http://yiiframework.com/\">Yii Framework</a>";
 		return date_format($date, 'Y-m-d');
 	}
 	public static function getDateFormattedDatePickerReports($dateToFormat){
+		if($dateToFormat == "" || $dateToFormat == NULL){
+			$dateToFormat = date('d M Y');
+		}
 		$date = DateTime::createFromFormat('d M Y', $dateToFormat);
 		return date_format($date, 'd/m/Y');
 	}
@@ -518,6 +521,7 @@ Powered by <a href=\"http://yiiframework.com/\">Yii Framework</a>";
 		}
 		return $date;
 	}
+
 	public static function getDateFormatted($dateToFormat,$locale=null,$formatter=null){
 		if(strlen($dateToFormat)==0)return "";
 		if($locale==null)
