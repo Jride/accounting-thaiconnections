@@ -79,44 +79,85 @@ class AccountController extends CController
 				ORDER BY Account.code";
 				// OR (Account.companyId = ".Yii::app()->user->getState('selectedCompanyId')."))
 		$accounts = Yii::app()->db->createCommand($sql)->queryAll();
+
+		Yii::import('application.controllers.mailer.*');
+		require_once("PHPMailerAutoload.php");
+
 		foreach($accounts as $account)
 		{
 			if(!empty($account['email']))
 			{
-				echo "Email Found...<br>";
-				if(!empty($account['threshold']) && !empty($account['days']))
+				// echo "Account Code: ".$account['accountcode']."<br>";
+				// echo "Account Name: ".$account['accountname']."<br>";
+				$threshold = empty($account['threshold']) ? 0 : intval($account['threshold']);
+				$days = empty($account['days']) ? 90 : intval($account['days']);
+				$balance = empty($account['balance']) ? 0 : intval($account['balance']);
+
+				// echo "Threshold is: ".$threshold."<br>";
+				// echo "Balance is: ".$balance."<br>";
+				// Continue with checking balance
+				if($balance < $threshold)
 				{
-					echo "Threshold is: ".$account['threshold']."<br>";
-					echo "Balance is: ".$account['balance']."<br>";
-					// Continue with checking balance
-					if(intval($account['balance']) < intval($account['threshold']))
-					{
-						echo "Notifying email...<br>";
-						// Notify all emails attatched to account
-						$to = $account['email'];
-						$subject = 'Account Balance Breached Threshold';
-						$headers = "From: Accounting@thaiconnections.org \r\n";
-						$headers .= "Reply-To: no-reply@thaiconnections.org\r\n";
-						$headers .= "MIME-Version: 1.0\r\n";
-						$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
-						
-						$message = '<html><body>';
-						$message .= '<p>Hello,</p>';
-						$message .= '<p>This a automated notification saying that the balance for Account: <strong>'.$account['accountname'].' </strong>has gone lower than the current threshold.<p>';
-						$message .= '<p>The current balance is:<strong> '.$account['balance'].' Baht</strong><p>';
-						$message .= '<p>Kindest Regards,<br>';
-						$message .= 'Thaiconnections Accounting</p>';
-						$message .= '</body></html>';
-						
-						if(mail($to, $subject, $message, $headers)){
-							echo "Email sent...<br>";	
-						}else{
-							echo "Mail did not send. Error occurred";
-						}
-					}
+
+					// echo "Notifying email...<br>";
+
+					$mail = new PHPMailer;
+          $mail->CharSet = 'UTF-8';
+
+          $mail->isSendmail();
+
+          $mail->isHTML(true);
+
+          $message = '<!DOCTYPE HTML>'.
+                    	'<head>'. 
+                    	'<meta http-equiv="content-type" content="text/html; charset=utf-8">'.
+                    	'<title>FCF Accounting Email notification</title>'.
+                    	'</head>';
+
+					// // Notify all emails attatched to account
+          $email_arr = explode(",", $account['email']);
+          foreach ($email_arr as $email) {
+          	$email = trim($email);
+          	// echo 'Users email: '.$email.'<br>';
+          	$mail->addAddress($email);
+          }
+
+					$mail->setFrom('no-reply@thaiconnections.org', 'FCF Accounting');
+					
+					$message .= '<body>'.
+											'<p>Hello,</p><br>'.
+											'<p>This a automated notification from accounting at thaiconnections stating that the balance for Account: <strong>'.
+											$account['accountname'].
+											' </strong>has gone lower than the given threshold.<p>'.
+											'<p>The current balance is:<strong> '.
+											$balance.
+											' Baht</strong><p><br>'.
+											'<p>Kindest Regards,<br>'.
+											'FCF Accounting</p>'.
+											'</body>';
+
+					$mail->Subject = 'Balance Threshold Breached';
+
+          $mail->Body = preg_replace('/\[\]/','',$message);
+          $mail->AltBody = 'Hi, this a automated notification from accounting at thaiconnections stating that the balance for Account: '.
+          								 	$account['accountname'].
+          									' has gone lower than the given threshold. The current balance is: '.
+          									$balance.
+          									' Kindest Regards, Thaiconnections Accounting';
+					
+					
+					if(!$mail->send()) {
+                  // $this->log('Could not send mail. Please check servers email configurations', 'adminLog');
+                  // echo 'Mailer Error: ' . $mail->ErrorInfo;
+          } else {
+                  // echo 'Mail sent successfully';
+          }
+					
 				}
+
 			}
 		}
+		echo "Script has finished....<br>";
 /*		echo "<pre>";
 		//var_dump($accounts);
 		echo "</pre>";*/

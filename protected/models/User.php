@@ -503,14 +503,24 @@ Powered by <a href=\"http://yiiframework.com/\">Yii Framework</a>";
 	}
 	public static function getDateFormattedDatePicker($dateToFormat){
 		$date = DateTime::createFromFormat('d M Y', $dateToFormat);
-		return date_format($date, 'Y-m-d');
+		if($date){
+			return date_format($date, 'Y-m-d');
+		}else{
+			return date('Y-m-d');
+		}
+		
 	}
 	public static function getDateFormattedDatePickerReports($dateToFormat){
 		if($dateToFormat == "" || $dateToFormat == NULL){
 			$dateToFormat = date('d M Y');
 		}
 		$date = DateTime::createFromFormat('d M Y', $dateToFormat);
-		return date_format($date, 'd/m/Y');
+		$return = date_format($date, 'd/m/Y');
+		if($return){
+			return $return;
+		}else{
+			return date('d M Y');
+		}
 	}
 	public static function transactionDatePicker($dateToFormat){
 		$tmpdate = date_create_from_format('d M Y', $dateToFormat);
