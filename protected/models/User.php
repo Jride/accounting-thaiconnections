@@ -57,6 +57,7 @@ class User extends CActiveRecord
 	 * @var string $displayname
 	 * @var string $mobil
 	 * @var string $email
+	 * @var string $negativeAssetTrans
 	 * @var integer $selectedCompanyId
 	 * @var integer $selectedPeriodId
 	 * @var string $changedBy
@@ -71,6 +72,7 @@ class User extends CActiveRecord
 	 	 	.'displayname='.$this->displayname .  ';' 
 	 	 	.'mobil='.$this->mobil .  ';' 
 	 	 	.'email='.$this->email .  ';' 
+	 	 	.'negativeAssetTrans='.$this->negativeAssetTrans .  ';' 
 	 	 	.'selectedCompany='.$this->selectedCompanyId .  ';' 
 	 	 	.'selectedPeriodId='.$this->selectedPeriodId .  ';' ;
 	 	 $returnString.=$this->optionsArrayToString($this->optionsUserTemplate());
@@ -109,10 +111,10 @@ class User extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('username, displayname, password', 'required'),
+			array('username, displayname, password, negativeAssetTrans', 'required'),
 			array('username, password, displayname', 'length', 'max'=>128),
 			array('mobil', 'length', 'max'=>50),
-			array('email', 'length', 'max'=>100),
+			array('email, negativeAssetTrans', 'length', 'max'=>100),
 			array('dateLastLogin', 'safe'),
 			array('dateLastLogout', 'safe'),
 			array('dateChanged', 'safe'),
@@ -160,6 +162,7 @@ class User extends CActiveRecord
 			'displayname' => Yii::t('lazy8','Displayname'),
 			'mobil' => Yii::t('lazy8','Mobil'),
 			'email' => Yii::t('lazy8','Email'),
+			'negativeAssetTrans' => Yii::t('lazy8','Negative Asset Transactions Allowed'),
 			'userId' => Yii::t('lazy8','User'),
 			'dateChanged' => Yii::t('lazy8','Date Changed'),
 			'changedBy' => Yii::t('lazy8','Changed by'),
@@ -177,6 +180,7 @@ class User extends CActiveRecord
 		$webapp=Yii::app()->user;
 		if($webapp->id==$this->id || $force){
 			$webapp->setState('displayname', $this->displayname);
+			$webapp->setState('negativeAssetTrans', $this->negativeAssetTrans);
 			$webapp->setState('selectedCompany', '');
 			$webapp->setState('selectedPeriod', '');
 			if(isset($this->selectedCompanyId)){

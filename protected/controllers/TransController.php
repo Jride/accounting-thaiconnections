@@ -195,22 +195,26 @@ class TransController extends CController
 					// $tempdate=User::parseDate($models[0]->invDate);
 
 					$changedTrans=$this->copyTempTransToNewTrans($trans->periodNum,$trans->companyNum);
-					//clear temptrans
-					Trans::model()->dbConnection->createCommand("DELETE FROM TempTrans WHERE userId=". Yii::app()->user->id)->execute();
-					
-					$models=array();
-					$models[]=$this->getBlankTempTrans(count($models),$tempdate);
-					$models[]=$this->getBlankTempTrans(count($models),$tempdate);
-					$models[]=$this->getBlankTempTrans(count($models),$tempdate);
-					$models[]=$this->getBlankTempTrans(count($models),$tempdate);
-					if(Yii::app()->user->getState('showPeriodTransactionNumber'))
-						$transnum=$trans->periodNum;
-					else
-						$transnum=$trans->companyNum;
-					$stringModel=$changedTrans->toString();
-					if ($modelBeforeChange!=$stringModel)
-						ChangeLog::addLog('UPDATE','Trans','BEFORE<br />' . $modelBeforeChange . '<br />AFTER<br />' . $stringModel);
-					$this->redirect(array('create','saved'=>$transnum));
+					if($changedTrans == NULL){
+						$models[0]->addError('[0]amountcredit',Yii::t('lazy8','You are not allowed to process this transaction as it makes the balance of the selected account to be negative.'));
+					}else{
+						//clear temptrans
+						Trans::model()->dbConnection->createCommand("DELETE FROM TempTrans WHERE userId=". Yii::app()->user->id)->execute();
+						
+						$models=array();
+						$models[]=$this->getBlankTempTrans(count($models),$tempdate);
+						$models[]=$this->getBlankTempTrans(count($models),$tempdate);
+						$models[]=$this->getBlankTempTrans(count($models),$tempdate);
+						$models[]=$this->getBlankTempTrans(count($models),$tempdate);
+						if(Yii::app()->user->getState('showPeriodTransactionNumber'))
+							$transnum=$trans->periodNum;
+						else
+							$transnum=$trans->companyNum;
+						$stringModel=$changedTrans->toString();
+						if ($modelBeforeChange!=$stringModel)
+							ChangeLog::addLog('UPDATE','Trans','BEFORE<br />' . $modelBeforeChange . '<br />AFTER<br />' . $stringModel);
+						$this->redirect(array('create','saved'=>$transnum));
+					}
 				}else
 				{
 					$models[0]->addError('[0]amountcredit',Yii::t('lazy8','You are not allowed to change any transactions. See company options.'));
@@ -234,20 +238,24 @@ class TransController extends CController
 				// $tempdate=User::parseDate($models[0]->invDate);
 
 				$addedTrans=$this->copyTempTransToNewTrans($per->lastPeriodTransNum,$comp->lastAbsTransNum,true);
-				ChangeLog::addLog('ADD','Trans',$addedTrans->toString());
-				//clear temptrans
-				
-				Trans::model()->dbConnection->createCommand("DELETE FROM TempTrans WHERE userId=". Yii::app()->user->id)->execute();
-				$models=array();
-				$models[]=$this->getBlankTempTrans(count($models),$tempdate);
-				$models[]=$this->getBlankTempTrans(count($models),$tempdate);
-				$models[]=$this->getBlankTempTrans(count($models),$tempdate);
-				$models[]=$this->getBlankTempTrans(count($models),$tempdate);
-				if(Yii::app()->user->getState('showPeriodTransactionNumber'))
-					$transnum=$per->lastPeriodTransNum;
-				else
-					$transnum=$per->lastPeriodTransNum;
-				$this->redirect(array('create','added'=>$transnum));
+				if($addedTrans == NULL){
+					$models[0]->addError('[0]amountcredit',Yii::t('lazy8','You are not allowed to process this transaction as it makes the balance of the selected account to be negative.'));
+				}else{
+					ChangeLog::addLog('ADD','Trans',$addedTrans->toString());
+					//clear temptrans
+					
+					Trans::model()->dbConnection->createCommand("DELETE FROM TempTrans WHERE userId=". Yii::app()->user->id)->execute();
+					$models=array();
+					$models[]=$this->getBlankTempTrans(count($models),$tempdate);
+					$models[]=$this->getBlankTempTrans(count($models),$tempdate);
+					$models[]=$this->getBlankTempTrans(count($models),$tempdate);
+					$models[]=$this->getBlankTempTrans(count($models),$tempdate);
+					if(Yii::app()->user->getState('showPeriodTransactionNumber'))
+						$transnum=$per->lastPeriodTransNum;
+					else
+						$transnum=$per->lastPeriodTransNum;
+					$this->redirect(array('create','added'=>$transnum));
+				}
 			}else{
 				//there are errors. Restore the old
 			}
@@ -457,12 +465,51 @@ class TransController extends CController
 
 		return $valid;
 	}
+
+	private function checkAccountNegative($account_id, $amount_credit){
+		$sql = "SELECT Account.code AS accountcode, Account.name AS accountname, e1.amount AS balance
+				FROM Account
+				JOIN (
+				select accountId, TRIM( TRAILING 0 FROM ROUND( SUM( amount ) , 5 ) ) AS 'amount'
+				FROM TransRow
+				join Account on Account.id=accountId
+				WHERE accountId = Account.id
+				group by accountId) e1 ON e1.accountId = Account.id
+				WHERE Account.id = ".$account_id;
+		$accounts = Yii::app()->db->createCommand($sql)->queryAll();
+
+		$account_balance = intval($accounts[0]['balance']);
+		$credit = intval($amount_credit);
+		$new_balance = $account_balance - $credit;
+		if($new_balance < 0){
+			return false;
+		}else{
+			return true;
+		}
+	}
+
 	private function copyTempTransToNewTrans($periodNum,$companyNum,$isUpdateRegDate=false)
 	{
-			//everything is ok.  Make the new transaction
+		//everything is ok.  Make the new transaction
 		$models=$this->getFromTempTrans();
-		$trans=new Trans();
 		$cLoc=CLocale::getInstance('en');
+
+		// CHECK IF USER CAN COMMIT NEGAIVE ASSET TRANSACTIONS
+		$negativeAssetTrans = Yii::app()->user->getState('negativeAssetTrans');
+		
+		if($negativeAssetTrans == 0){
+			foreach($models as $model){
+				$amountcredit=$this->parseNumber($model->amountcredit,$cLoc);
+				if($amountcredit!=0){
+					$pass = $this->checkAccountNegative($model->accountId, $amountcredit);
+					if(!$pass){
+						return NULL;
+					}
+				}
+			}
+		}
+
+		$trans=new Trans();
 		
 		$tmpDate = date_create_from_format('d M Y', $models[0]->invDate);
 		$trans->invDate = date_format($tmpDate, 'Y-m-d');

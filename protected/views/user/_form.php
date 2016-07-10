@@ -46,6 +46,14 @@
 <div class="simple">
 <?php echo CHtml::activeLabelEx($model,'email',array('class'=>'help','title'=>Yii::t('lazy8','contexthelp.email'),'onclick'=>'alert(this.title)'));  echo CHtml::activeTextField($model,'email',array('size'=>35,'maxlength'=>100)); ?>
 </div>
+<div class="simple">
+<?php 
+	echo CHtml::activeLabelEx(
+				$model,'negativeAssetTrans',array('class'=>'help',
+				'title'=>Yii::t('lazy8','contexthelp.negativeAssetTrans'),
+				'onclick'=>'alert(this.title)'));  
+	echo CHtml::activeCheckBox($model,'negativeAssetTrans'); ?>
+</div>
 <?php if(count($allCompanies)>0) { ?>
 <div class="simple">
 <?php echo CHtml::label(Yii::t('lazy8','Select the companies this user may work with'),false,array('class'=>'help','title'=>Yii::t('lazy8','contexthelp.Select the companies this user may work with'),'onclick'=>'alert(this.title)')); echo CHtml::listBox('companies', $selectedCompanies,CHtml::listData($allCompanies,'id','name'),array('multiple'=>'yes')); ?>
