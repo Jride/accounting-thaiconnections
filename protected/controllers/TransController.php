@@ -499,11 +499,22 @@ class TransController extends CController
 		
 		if($negativeAssetTrans == 0){
 			foreach($models as $model){
-				$amountcredit=$this->parseNumber($model->amountcredit,$cLoc);
-				if($amountcredit!=0){
-					$pass = $this->checkAccountNegative($model->accountId, $amountcredit);
-					if(!$pass){
-						return NULL;
+				// only if account is 399999 or less
+				$sql = "SELECT Account.code AS accountcode
+								FROM Account
+								WHERE Account.id = ".$model->accountId;
+				$accounts = Yii::app()->db->createCommand($sql)->queryAll();
+
+				if(!empty($accounts)){
+					$account_code = intval($accounts[0]['accountcode']);
+					if($account_code < 399999){
+						$amountcredit=$this->parseNumber($model->amountcredit,$cLoc);
+						if($amountcredit!=0){
+							$pass = $this->checkAccountNegative($model->accountId, $amountcredit);
+							if(!$pass){
+								return NULL;
+							}
+						}
 					}
 				}
 			}
