@@ -56,6 +56,11 @@
 		echo CHtml::activeCheckBox($model,'negativeAssetTrans');
 ?>
 </div>
+<div class="simple">
+<?php 
+	echo CHtml::activeLabelEx($model,'tagList',array('class'=>'help','title'=>Yii::t('lazy8','contexthelp.tagList'),'onclick'=>'alert(this.title)'));  
+	echo CHtml::activeTextField($model,'tagList', array('size'=>60,'maxlength'=>500)); ?>
+</div>
 <?php } ?>
 <?php if(count($allCompanies)>0) { ?>
 <div class="simple">

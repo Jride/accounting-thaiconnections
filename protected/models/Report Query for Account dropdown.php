@@ -4,23 +4,28 @@
 */
 
  $accountList = ''; 
- if(Yii::app()->user->name == "ReportsOnlyUser"){ 
- 	$accountTags = Yii::app()->session['accountTags'];
+ if(Yii::app()->user->name == "ReportsOnlyUser" || Yii::app()->user->getState('thaiconnectionsUser') == 'true'){ 
+  $accountTags = Yii::app()->user->getState('tagList');
 
- 	$account_ids = Yii::app()->db->createCommand('SELECT DISTINCT aca.accountId as AccountID FROM AccountCustomerAssignment aca INNER JOIN ( SELECT c.id, c.name FROM Customer c WHERE c.code IN ('.$accountTags.')) ww ON aca.customerId = ww.id ORDER BY AccountID')->queryAll();
+  if($accountTags != ''){
+    $account_ids = Yii::app()->db->createCommand('SELECT DISTINCT aca.accountId as AccountID FROM AccountCustomerAssignment aca INNER JOIN ( SELECT c.id, c.name FROM Customer c WHERE c.code IN ('.$accountTags.')) ww ON aca.customerId = ww.id ORDER BY AccountID')->queryAll();
 
-	$accountID_string = '';
-	$i = 0;
-	foreach ($account_ids as $acc) {	
-		if ($i == 0) {
-			$accountID_string .= $acc['AccountID'];
-		}else{
-			$accountID_string .= ','.$acc['AccountID'];
-		}
-		$i++;
-	}
+    $accountID_string = '';
+    $i = 0;
+    foreach ($account_ids as $acc) {  
+      if ($i == 0) {
+        $accountID_string .= $acc['AccountID'];
+      }else{
+        $accountID_string .= ','.$acc['AccountID'];
+      }
+      $i++;
+    }
 
- 	$accountList = ' AND id IN ('.$accountID_string.')';
+    $accountList = ' AND id IN ('.$accountID_string.')';
+  }else{
+    $accountList = ' AND id IN (701)';
+  }
+
  }
 
  $sqlList=CHtml::encodeArray(CHtml::listData(Account::model()->findAll(

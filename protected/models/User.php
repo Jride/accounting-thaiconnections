@@ -123,6 +123,7 @@ class User extends CActiveRecord
 			array('username, password, displayname', 'length', 'max'=>128),
 			array('mobil', 'length', 'max'=>50),
 			array('email, negativeAssetTrans', 'length', 'max'=>100),
+			array('tagList', 'length', 'max'=>1000),
 			array('dateLastLogin', 'safe'),
 			array('dateLastLogout', 'safe'),
 			array('dateChanged', 'safe'),
