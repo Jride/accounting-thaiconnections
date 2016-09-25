@@ -166,7 +166,7 @@ while ($row = mysqli_fetch_array($loop))
 $balance = number_format($balance, 2);
 $balanceProjected = number_format($balanceProjected, 2);
 
-if(Yii::app()->user->name != 'ReportsOnlyUser'){
+if(Yii::app()->user->name != 'ReportsOnlyUser' && Yii::app()->user->getState('thaiconnectionsUser') != 'true'){
 ?>
 
 <div class="mainBalance">

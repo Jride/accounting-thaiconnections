@@ -58,6 +58,10 @@ class User extends CActiveRecord
 	 * @var string $mobil
 	 * @var string $email
 	 * @var string $negativeAssetTrans
+	 * @var string $thaiconnectionsUser
+	 * @var string $tagList
+	 * @var string $accountList
+	 * @var string $reportIds
 	 * @var integer $selectedCompanyId
 	 * @var integer $selectedPeriodId
 	 * @var string $changedBy
@@ -73,6 +77,10 @@ class User extends CActiveRecord
 	 	 	.'mobil='.$this->mobil .  ';' 
 	 	 	.'email='.$this->email .  ';' 
 	 	 	.'negativeAssetTrans='.$this->negativeAssetTrans .  ';' 
+	 	 	.'thaiconnectionsUser='.$this->thaiconnectionsUser .  ';' 
+	 	 	.'tagList='.$this->tagList .  ';' 
+	 	 	.'accountList='.$this->accountList .  ';' 
+	 	 	.'reportIds='.$this->reportIds .  ';' 
 	 	 	.'selectedCompany='.$this->selectedCompanyId .  ';' 
 	 	 	.'selectedPeriodId='.$this->selectedPeriodId .  ';' ;
 	 	 $returnString.=$this->optionsArrayToString($this->optionsUserTemplate());
@@ -163,6 +171,10 @@ class User extends CActiveRecord
 			'mobil' => Yii::t('lazy8','Mobil'),
 			'email' => Yii::t('lazy8','Email'),
 			'negativeAssetTrans' => Yii::t('lazy8','Negative Asset Transactions Allowed'),
+			'thaiconnectionsUser' => Yii::t('lazy8','Users who have been ported over from thaiconnections'),
+			'tagList' => Yii::t('lazy8','A comma seperated list of the users tags'),
+			'accountList' => Yii::t('lazy8','A comma seperated list of the users accounts'),
+			'reportIds' => Yii::t('lazy8','A comma seperated list of the users reports they can access'),
 			'userId' => Yii::t('lazy8','User'),
 			'dateChanged' => Yii::t('lazy8','Date Changed'),
 			'changedBy' => Yii::t('lazy8','Changed by'),
@@ -181,6 +193,10 @@ class User extends CActiveRecord
 		if($webapp->id==$this->id || $force){
 			$webapp->setState('displayname', $this->displayname);
 			$webapp->setState('negativeAssetTrans', $this->negativeAssetTrans);
+			$webapp->setState('thaiconnectionsUser', $this->thaiconnectionsUser);
+			$webapp->setState('tagList', $this->tagList);
+			$webapp->setState('accountList', $this->accountList);
+			$webapp->setState('reportIds', $this->reportIds);
 			$webapp->setState('selectedCompany', '');
 			$webapp->setState('selectedPeriod', '');
 			if(isset($this->selectedCompanyId)){

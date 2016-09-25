@@ -36,9 +36,11 @@
 // print_r($reports);
 // echo "</pre>";
 
-if(Yii::app()->user->name == "ReportsOnlyUser"){
+if(Yii::app()->user->getState('thaiconnectionsUser') == "true"){
+	// This is a thaiconnections user so filter out the reports they are allowed to access
 
-	$reportIds = Yii::app()->session['reportIds'];
+	$reportIds = Yii::app()->user->getState('reportIds');
+
 	if(empty($reportIds)){
 		// die('Sorry but you currently do not have any access to any reports. Please contact webmasters@thaiconnections.org to gain access to the reports section.');
 		$reportIds = '37'; // Adds the account summary report as default
