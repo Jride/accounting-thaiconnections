@@ -410,7 +410,7 @@ Powered by <a href=\"http://yiiframework.com/\">Yii Framework</a>";
 	public function delete()
 	{
 		parent::delete();
-		$this->onDeletePost(new Lazy8Event('User',$this->id));
+		// $this->onDeletePost(new Lazy8Event('User',$this->id));
 		$this->dbConnection->createCommand("DELETE FROM CompanyUser WHERE userId={$this->id}")->execute();
 		$this->dbConnection->createCommand("DELETE FROM Options WHERE userId={$this->id}")->execute();
 		$this->dbConnection->createCommand("DELETE FROM ReportUserLastUsedParams WHERE userId={$this->id}")->execute();
