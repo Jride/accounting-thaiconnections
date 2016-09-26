@@ -113,13 +113,13 @@ if(!Yii::app()->user->isGuest){
 	$menu["menu"]=Yii::app()->mainMenu;
 }else{
 	$menu["menu"]=array(
-			array(
-				"url"=>array("route"=>"/site/reportlogin"),
-				"label"=>Yii::t("lazy8","Reports Login"),
-			),
+			// array(
+			// 	"url"=>array("route"=>"/site/reportlogin"),
+			// 	"label"=>Yii::t("lazy8","Reports Login"),
+			// ),
 			array(
 				"url"=>array("route"=>"/site/login"),
-				"label"=>Yii::t("lazy8","Admin Login"),
+				"label"=>Yii::t("lazy8","Login"),
 			)
 	);
 }

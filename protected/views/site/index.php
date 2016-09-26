@@ -40,9 +40,7 @@ if(!Yii::app()->user->isGuest){
   $accountTags = Yii::app()->session['accountTags'];
   // echo $accountNumbers;
 }else{ 
- echo Yii::t("lazy8",'If you are a registered user to the Thaiconnections website and would like to view/generate reports for your
-                      project then please click the "Reports Login" menu item above otherwise if you are an accounting 
-                      administrator then please click the "Admin Login" menu.');  
+ echo Yii::t("lazy8",'Please click the Login menu link just above to login to system.');  
 } 
 if($models!=null){
 ?>

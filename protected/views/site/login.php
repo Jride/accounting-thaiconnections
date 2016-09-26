@@ -19,7 +19,7 @@
 */
  $this->pageTitle=Yii::app()->name . ' - Login'; ?>
 
-<h1><?php echo Yii::t('lazy8','Admin Login'); ?></h1>
+<h1><?php echo Yii::t('lazy8','Login'); ?></h1>
 
 <div class="yiiForm">
 <?php echo CHtml::beginForm(); ?>

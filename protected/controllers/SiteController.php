@@ -234,31 +234,31 @@ class SiteController extends CController
 	/**
 	 * Displays the report login page
 	 */
-	public function actionReportlogin()
-	{
-		if(Yii::app()->user->isGuest){
-			$language=SiteController::getBrowserLanguage();
-			Yii::app()->setLanguage($language);
-			Yii::app()->user->setState('languagecode',$language);		
-		}		
-		$form=new LoginForm;
-		// collect user input data
-		if(isset($_POST['LoginForm']))
-		{
-			$form->attributes=$_POST['LoginForm'];
+	// public function actionReportlogin()
+	// {
+	// 	if(Yii::app()->user->isGuest){
+	// 		$language=SiteController::getBrowserLanguage();
+	// 		Yii::app()->setLanguage($language);
+	// 		Yii::app()->user->setState('languagecode',$language);		
+	// 	}		
+	// 	$form=new LoginForm;
+	// 	// collect user input data
+	// 	if(isset($_POST['LoginForm']))
+	// 	{
+	// 		$form->attributes=$_POST['LoginForm'];
 
-			// validate user input and redirect to previous page if valid
-			if($form->validate()){
-				User::checkAndFixTable();
-				Yii::app()->session['accountNumbers'] = $_POST['LoginForm']['accountNumbers'];
-				Yii::app()->session['accountTags'] = $_POST['LoginForm']['accountTags'];
-				Yii::app()->session['reportIds'] = $_POST['LoginForm']['reportIds'];
-				$this->redirect(Yii::app()->user->returnUrl);
-			}
-		}
-		// display the login form
-		$this->render('reportlogin',array('form'=>$form));
-	}
+	// 		// validate user input and redirect to previous page if valid
+	// 		if($form->validate()){
+	// 			User::checkAndFixTable();
+	// 			Yii::app()->session['accountNumbers'] = $_POST['LoginForm']['accountNumbers'];
+	// 			Yii::app()->session['accountTags'] = $_POST['LoginForm']['accountTags'];
+	// 			Yii::app()->session['reportIds'] = $_POST['LoginForm']['reportIds'];
+	// 			$this->redirect(Yii::app()->user->returnUrl);
+	// 		}
+	// 	}
+	// 	// display the login form
+	// 	$this->render('reportlogin',array('form'=>$form));
+	// }
 
 	/**
 	 * Logout the current user and redirect to homepage.
