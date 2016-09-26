@@ -119,7 +119,7 @@ if(isset($repParams)&&count($repParams)>0){
 				echo CHtml::dropDownList($n,$_POST[$n], $sqlList,array('style'=>'width:200px;')); 
 				break;
 			case 'DATE':
-				echo CHtml::textField($n,User::getDateFormattedDatePickerReports($_POST[$n]),array('size'=>15)); 
+				echo CHtml::textField($n,'',array('size'=>15)); 
 				$this->widget('application.extensions.calendar.SCalendar',array(	
 							'firstDay'=>'1',
 							'language'=>'en',
