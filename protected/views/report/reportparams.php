@@ -36,20 +36,21 @@
 // print_r($reports);
 // echo "</pre>";
 
-if(Yii::app()->user->getState('thaiconnectionsUser') == "true"){
+$tagList = Yii::app()->user->getState('tagList');
+if($tagList != ""){
 	// This is a thaiconnections user so filter out the reports they are allowed to access
 
-	$reportIds = Yii::app()->user->getState('reportIds');
+	// $reportIds = Yii::app()->user->getState('reportIds');
 
-	if(empty($reportIds)){
-		// die('Sorry but you currently do not have any access to any reports. Please contact webmasters@thaiconnections.org to gain access to the reports section.');
-		$reportIds = '37'; // Adds the account summary report as default
-	}
-	$reportAccess = explode(',', $reportIds);
+	// if(empty($reportIds)){
+	// 	// die('Sorry but you currently do not have any access to any reports. Please contact webmasters@thaiconnections.org to gain access to the reports section.');
+	// 	$reportIds = '37'; // Adds the account summary report as default
+	// }
+	// $reportAccess = explode(',', $reportIds);
 
-	if(!in_array('37', $reportAccess)){
-		$reportAccess[] = '37';
-	}
+	// if(!in_array('37', $reportAccess)){
+	// 	$reportAccess[] = '37';
+	// }
 	
 	$newReports = array();
 	foreach ($reports as $key => $value) {

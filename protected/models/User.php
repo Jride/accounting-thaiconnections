@@ -324,7 +324,15 @@ class User extends CActiveRecord
 					$foundOption->datavalue=isset($_POST['option_' . $foundOption->name]) && $_POST['option_' . $foundOption->name]==1?'true':'false';
 					break;
 				}
-				$foundOption->save();
+
+				if($foundOption->name == 'NonStandardNumberDecimalFormat' || $foundOption->name == 'NonStandardNumberDecimalFormat'){
+					if(Yii::app()->user->getState('allowAdmin')){
+						$foundOption->save();
+					}
+				}else{
+					$foundOption->save();
+				}
+
 				if($id==$webapp->id || $id==0)
 					$webapp->setState($key, User::convertOptionToObject($foundOption->datavalue,$option));
 			}
@@ -349,8 +357,8 @@ class User extends CActiveRecord
 			'languagecode'=>array('DROP_DOWN_LIST','en','en','false','$ar=array();$msg=Message::model()->findAll(array(\'select\'=>\'distinct language\'));foreach($msg as $a){$ar[]=array(\'id\'=>$a[\'language\'],\'name\'=>yii::t(\'lazy8\',\'languagename.iso636.\'.$a[\'language\']));}$list=CHtml::encodeArray(CHtml::listData($ar,\'id\',\'name\'));','false','false','false','false'),
 			'NumberRecordsPerPage'=>array('INTEGER','20','20','false','','false','false','false','false'),
 			'TransactionEditWidthMultiplier'=>array('FLOAT','1.0','1.0','false','','false','false','false','false'),
-			'NonStandardNumberDecimalFormat'=>array('STRING','#,##0.0','#,##0.0','false','','false','false','false','false'),
-			'NonStandardDateFormat'=>array('STRING','d MMM yyyy','d MMM yyyy','false','','false','false','false','false'),
+			'NonStandardNumberDecimalFormat'=>array('STRING','#,##0.0','#,##0.0','false','','false','true','false','false'),
+			'NonStandardDateFormat'=>array('STRING','d MMM yyyy','d MMM yyyy','false','','false','true','false','false'),
 			'PdfPageFormat'=>array('DROP_DOWN_LIST','A4','A4','false','$list=array(\'A4\'=>\'A4\',\'LETTER\'=>\'LETTER\',\'A3\'=>\'A3\',\'A5\'=>\'A5\',\'B4\'=>\'B4\',\'B5\'=>\'B5\',\'B6\'=>\'B6\',\'C4\'=>\'C4\',\'C5\'=>\'C5\',\'E4\'=>\'E4\',\'E5\'=>\'E5\',\'G4\'=>\'G4\',\'G5\'=>\'G5\',\'P3\'=>\'P3\',\'P4\'=>\'P4\',\'LEGAL\'=>\'LEGAL\',\'GLETTER\'=>\'GLETTER\',\'JLEGAL\'=>\'JLEGAL\',\'QUARTO\'=>\'QUARTO\',\'FOLIO\'=>\'FOLIO\',\'EXECUTIVE\'=>\'EXECUTIVE\',\'MEMO\'=>\'MEMO\',\'FOOLSCAP\'=>\'FOOLSCAP\');','false','false','false','false'),
 			'PdfFont'=>array('DROP_DOWN_LIST','helvetica','helvetica','false','$list=array(\'courier\'=>\'courier\',\'dejavusanscondensed\'=>\'dejavusanscondensed\',\'dejavusansmono\'=>\'dejavusansmono\',\'dejavusans\'=>\'dejavusans\',\'dejavuserifcondensed\'=>\'dejavuserifcondensed\',\'dejavuserif\'=>\'dejavuserif\',\'freemono\'=>\'freemono\',\'freesans\'=>\'freesans\',\'freeserif\'=>\'freeserif\',\'helvetica\'=>\'helvetica\',\'times\'=>\'times\');','false','false','false','false'),
 			'PdfFontSize'=>array('DROP_DOWN_LIST','8','8','false','$list=array(6=>6,7=>7,8=>8,9=>9,10=>10,11=>11,12=>12,13=>13,14=>14);','false','false','false','false'),

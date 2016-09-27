@@ -94,15 +94,16 @@ if(isset($model->useroptions)){
 		// echo "<pre>";
 		// var_dump($useroption->name);
 		// echo "</pre>";
-		$enable = true;
-		if($useroption->name == 'NonStandardNumberDecimalFormat' || $useroption->name == 'NonStandardDateFormat'){
-			$enable = false;
-		}
+		// $enable = true;
+		
+		// if($useroption->name == 'NonStandardNumberDecimalFormat' || $useroption->name == 'NonStandardDateFormat'){
+		// 	$enable = false;
+		// }
 
-		if(Yii::app()->user->getState('allowAdmin')){ 
-			// User is admin so allow editing of the date and number formatting
-			$enable = true;
-		}
+		// if(Yii::app()->user->getState('allowAdmin')){ 
+		// 	// User is admin so allow editing of the date and number formatting
+		// 	$enable = true;
+		// }
 
 		if(isset($optionTemplate[$useroption->name])){
 			if($optionTemplate[$useroption->name][3]=='false' && ($optionTemplate[$useroption->name][5]=='false' || Yii::app()->user->getState('allowAdmin'))){
@@ -125,11 +126,7 @@ if(isset($model->useroptions)){
 			case 'STRING':
 			case 'INTEGER':
 			case 'FLOAT':
-				if($enable)
-					echo CHtml::textField('option_' . $useroption->name,$useroption->datavalue,array('size'=>'10'));
-				else
-					echo CHtml::textField('option_' . $useroption->name,$useroption->datavalue,array(
-						'size'=>'10', 'readonly'=>'readonly', 'disabled'=>'disabled')); 
+				echo CHtml::textField('option_' . $useroption->name,$useroption->datavalue,array('size'=>'10'));
 				break;
 			case 'DATE':
 				echo CHtml::textField('option_' . $useroption->name,$useroption->datavalue);
@@ -178,6 +175,7 @@ if(isset($weboptions) && isset($companies)){
 	<table class="dataGrid" width="550">
 <?php 
 	foreach($useroptions as $n=>$useroption){
+
 		if(isset($optionTemplate[$useroption->name])){
 ?>
 <tr class="<?php echo $n%2?'even':'odd';?>"><td>
