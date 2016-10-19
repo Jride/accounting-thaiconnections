@@ -50,6 +50,14 @@ class Trans extends CActiveRecord
 		$transRows=$this->amounts;
 		if(isset($transRows) && count($transRows)>0){
 			foreach($transRows as $transrow){
+				// echo '<pre> --- START ---- <br>';
+				// var_dump($transrow);
+				// echo '</pre> --- END ---- <br>';
+				// var_dump($transrow->donorId);
+				// echo '<br>DONOR_ID: '.$transrow->donorId;
+				// echo '<br>DONOR_CODE: '.$transrow->donor->code;
+				// echo '<br>DONOR_NAME: '.$transrow->donor->name;
+
 				$returnString.='<br />'.$transrow->toString();
 			}
 		}

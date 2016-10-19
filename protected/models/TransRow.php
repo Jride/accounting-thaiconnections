@@ -33,13 +33,19 @@ class TransRow extends CActiveRecord
 	 */
 
 	 public function toString(){
-	 	 
-	 	 return 'id=' . $this->id . ';'
+
+	 	 $string = 'id=' . $this->id . ';'
 	 	 	.$this->accountId!=0&&isset($this->account)?'account='.$this->account->code .  ';' . $this->account->name .  ';' . $this->accountId .';':""
-	 	 	.$this->customerId!=0&&isset($this->customer)?'customer='.$this->customer->code .  ';' . $this->customer->name .  ';' . $this->customerId . ';' : ""
-			.$this->donorId!=0&&isset($this->donorId)?'donor='.$this->donor->code .  ';' . $this->donor->name .  ';' . $this->donorId . ';' : ""
-	 	 	.'notes='.$this->notes .  ';' 
-	 	 	.'amount='.$this->amount ;
+	 	 	.$this->customerId!=0&&isset($this->customer)?'customer='.$this->customer->code .  ';' . $this->customer->name .  ';' . $this->customerId . ';' : "";
+
+	 	 	if($this->donorId!=0&&isset($this->donor)){
+	 	 		$string .= 'customer='.$this->donor->code .  ';' . $this->donor->name .  ';' . $this->donorId . ';';
+	 	 	}
+
+	 	 	$string .= 'notes='.$this->notes .  ';' 
+	 	 					.'amount='.$this->amount ;
+
+	 	 	return $string;
 	 }
 	/**
 	 * Returns the static model of the specified AR class.
