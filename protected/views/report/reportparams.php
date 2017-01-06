@@ -130,7 +130,20 @@ if(isset($repParams)&&count($repParams)>0){
 				echo CHtml::dropDownList($n,$_POST[$n], $sqlList,array('style'=>'width:200px;')); 
 				break;
 			case 'DATE':
-				echo CHtml::textField($n,'',array('size'=>15)); 
+				// echo '<h2>INCOMING DATE: ' . $_POST[$n] . '</h2>';
+				// echo '<h2>DATE FORMATED: ' . User::getDateFormattedDatePickerReports($_POST[$n]) . '</h2>';
+
+				$setDate = '';
+
+				if(strtolower($repParam->name) == 'start date'){
+					$setDate = date('d/m/Y', strtotime("-2 months"));
+				}
+
+				if(strtolower($repParam->name) == 'end date'){
+					$setDate = date('d/m/Y');
+				}
+
+				echo CHtml::textField($n,$setDate,array('size'=>15)); 
 				$this->widget('application.extensions.calendar.SCalendar',array(	
 							'firstDay'=>'1',
 							'language'=>'en',
