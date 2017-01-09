@@ -71,8 +71,8 @@ class PeriodController extends CController
 		if(isset($_POST['Period']))
 		{
 			$model->attributes=$_POST['Period'];
-			$model->dateStart=User::parseDate($model->dateStart);
-			$model->dateEnd=User::parseDate($model->dateEnd);
+			$model->dateStart=User::getDateFormattedDatePickerChangePeriodSave($model->dateStart);
+			$model->dateEnd=User::getDateFormattedDatePickerChangePeriodSave($model->dateEnd);
 			$model->companyId=Yii::app()->user->getState('selectedCompanyId');
 			if($model->save()){
 				ChangeLog::addLog('ADD','Period',$model->toString());
@@ -88,8 +88,8 @@ class PeriodController extends CController
 				}
 			}
 		}
-		$model->dateStart=User::getDateFormatted(date('Y'). '-01-01');
-		$model->dateEnd=User::getDateFormatted(date('Y'). '-12-31');
+		$model->dateStart=User::getDateFormattedDatePickerChangePeriod(date('Y'). '-01-01');
+		$model->dateEnd=User::getDateFormattedDatePickerChangePeriod(date('Y'). '-12-31');
 		$model->dateChanged=User::getDateFormatted(date('Y-m-d'));
 		$this->render('create',array('model'=>$model));
 	}
@@ -100,13 +100,15 @@ class PeriodController extends CController
 	 */
 	public function actionUpdate()
 	{
+		// save date as Y-m-d
+		// Date picker format d/m/Y
 		$model=$this->loadPeriod();
 		if(isset($_POST['Period']))
 		{
 			$modelBeforeChange=$model->toString();
 			$model->attributes=$_POST['Period'];
-			$model->dateStart=User::parseDate($model->dateStart);
-			$model->dateEnd=User::parseDate($model->dateEnd);
+			$model->dateStart=User::getDateFormattedDatePickerChangePeriodSave($model->dateStart);
+			$model->dateEnd=User::getDateFormattedDatePickerChangePeriodSave($model->dateEnd);
 			$model->companyId=Yii::app()->user->getState('selectedCompanyId');
 			if($model->save()){
 				$stringModel=$model->toString();
@@ -115,8 +117,8 @@ class PeriodController extends CController
 				$this->redirect(array('admin','id'=>$model->id));
 			}
 		}
-		$model->dateStart=User::getDateFormatted($model->dateStart);
-		$model->dateEnd=User::getDateFormatted($model->dateEnd);
+		$model->dateStart=User::getDateFormattedDatePickerChangePeriod($model->dateStart);
+		$model->dateEnd=User::getDateFormattedDatePickerChangePeriod($model->dateEnd);
 		$model->dateChanged=User::getDateFormatted($model->dateChanged);
 		$this->render('update',array('model'=>$model));
 	}

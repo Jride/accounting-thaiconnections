@@ -539,6 +539,24 @@ Powered by <a href=\"http://yiiframework.com/\">Yii Framework</a>";
 		}
 		
 	}
+	public static function getDateFormattedDatePickerChangePeriod($dateToFormat){
+		$date = DateTime::createFromFormat('Y-m-d', $dateToFormat);
+		if($date){
+			return date_format($date, 'd/m/Y');
+		}else{
+			return date('d/m/Y');
+		}
+		
+	}
+	public static function getDateFormattedDatePickerChangePeriodSave($dateToFormat){
+		$date = DateTime::createFromFormat('d/m/Y', $dateToFormat);
+		if($date){
+			return date_format($date, 'Y-m-d');
+		}else{
+			return date('Y-m-d');
+		}
+		
+	}
 	public static function getDateFormattedDatePickerReports($dateToFormat){
 		if($dateToFormat == "" || $dateToFormat == NULL){
 			$dateToFormat = date('d M Y');

@@ -34,7 +34,7 @@ $this->widget('application.extensions.calendar.SCalendar',array(
 			'firstDay'=>'1',
 			'language'=>'en',
 			'inputField'=>'Period_dateStart',
-			'ifFormat'=>User::getPhPDateFormat(),
+			'ifFormat'=>User::getPhPDateFormatDatePickerReports(),
                       )); 
 ?>
 </div>
@@ -44,7 +44,7 @@ $this->widget('application.extensions.calendar.SCalendar',array(
 			'firstDay'=>'1',
 			'language'=>'en',
 			'inputField'=>'Period_dateEnd',
-			'ifFormat'=>User::getPhPDateFormat(),
+			'ifFormat'=>User::getPhPDateFormatDatePickerReports(),
                       )); 
 ?>
 </div>
